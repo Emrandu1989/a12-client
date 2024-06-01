@@ -1,12 +1,32 @@
 import { NavLink } from "react-router-dom";
 import logo from '../../assets/Logo-1.png'
+import useAuth from "../../hooks/useAuth";
 
 const NavBar = () => {
+     const {user, logOut} = useAuth();
+     console.log(user)
+      const handleLogOut = () =>{
+            logOut()
+            .then(result=>{
+                console.log(result)
+            })
+            .catch(error=>{
+                 console.log(error)
+            })
+      }
       const navLinks = <>
             <li> <NavLink to='dashboard'>DashBoard</NavLink>  </li>
             <li> <NavLink to='contact'>Contact Us</NavLink>  </li>
-            <li> <NavLink to='signUp'>SignUp</NavLink>  </li>
-            <li> <NavLink to='login'>Login</NavLink>  </li>
+
+          
+             {
+                 user ? <>
+                  <button onClick={handleLogOut}> LogOut </button>
+                 </> : <>
+                 <li> <NavLink to='login'>Login</NavLink>  </li>
+                 <li> <NavLink to='signUp'>SignUp</NavLink>  </li>
+                 </>
+             }
       </>
     return (
         <>
