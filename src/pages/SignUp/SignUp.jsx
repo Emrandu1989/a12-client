@@ -1,16 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { FaGoogle } from "react-icons/fa";
 
 
 const SignUp = () => {
-     const {createUser} = useAuth()
+     const {createUser, signInWithGoogle} = useAuth()
+      const navigate = useNavigate()
       
       const handleSignUp = event =>{
           event.preventDefault();
           const form = event.target;
           const email = form.email.value;
           const password = form.password.value;
+           
+          // Regular expressions for password validation
+           const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/
+           if(!passwordRegex.test(password)){
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title:
+                "Password must have at least 6 characters, one uppercase, and one lowercase letter",
+              showConfirmButton: false,
+              timer: 3000,
+            }); 
+            return
+           }
           const user = {email,password};
           console.log(user)
           createUser(email,password)
@@ -24,11 +40,31 @@ const SignUp = () => {
                 showConfirmButton: false,
                 timer: 1500
               });
+              navigate('/')
           })
           .catch(error=>{
                   console.log(error)
           })
           
+      }
+
+      const handleGoogleSignUp = ()=>{
+          signInWithGoogle()
+          .then(result=>{
+              const loggedUser = result.user;
+              console.log(loggedUser)
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User login Successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+              navigate('/')
+          })
+          .catch(error=>{
+            console.log(error)
+          })
       }
     return (
         <>
@@ -58,6 +94,9 @@ const SignUp = () => {
         </div>
          <p className="text-center ">Already Have an account <Link className="btn btn-link" to='/login'>Login</Link> </p>
       </form>
+         <div className="flex justify-center my-5">
+         <button onClick={handleGoogleSignUp} className="btn"><FaGoogle /></button>
+         </div>
     </div>
   </div>
 </div>   

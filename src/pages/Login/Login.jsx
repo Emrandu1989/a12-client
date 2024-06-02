@@ -1,10 +1,17 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import { useState } from 'react';
+import { FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
-      const {signIn} = useAuth()
+     
+      const {signIn,signInWithGoogle} = useAuth();
+
+      const navigate = useNavigate();
+   const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
       const handleLogin = (event) =>{
           event.preventDefault();
@@ -24,11 +31,38 @@ const Login = () => {
                 showConfirmButton: false,
                 timer: 1500
               });
+              navigate( from, {replace:true})
           })
           .catch(error=>{
              console.log(error)
+             Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: error,
+              showConfirmButton: false,
+              timer: 1500
+            });
           })
       }
+
+      const handleGoogleSignUp = ()=>{
+        signInWithGoogle()
+        .then(result=>{
+            const loggedUser = result.user;
+            console.log(loggedUser)
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User login Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            navigate('/')
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+    }
     return (
         <>
         <div className="hero min-h-screen bg-base-200">
@@ -57,6 +91,9 @@ const Login = () => {
    </div>
    <p className="text-center ">New To This Site Please <Link className="btn btn-link" to='/signUp'>SignUp</Link> </p>
  </form>
+ <div className="flex justify-center my-5">
+         <button onClick={handleGoogleSignUp} className="btn"><FaGoogle /></button>
+         </div>
 </div>
 </div>
 </div>   
