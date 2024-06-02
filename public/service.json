@@ -1,0 +1,32 @@
+[
+      {
+        "service_name": "Industrial Automation Solutions",
+        "description": "We offer comprehensive automation solutions tailored to optimize efficiency and productivity in industrial processes.",
+        "service_img": "https://media.istockphoto.com/id/1320950393/photo/cars-on-production-line-in-factory.jpg?s=612x612&w=0&k=20&c=WgJLxtOWIGt80cbC0OFc3wQAhraIxlz_H7l-ySDxkOw="
+      },
+      {
+        "service_name": "Robotics Integration",
+        "description": "Our expertise in robotics integration helps businesses automate tasks, streamline operations, and enhance precision.",
+        "service_img": "https://c8.alamy.com/comp/2BPGXG2/japan-robot-week-exhibition-in-tokyo-japan-japan-robot-week-is-a-trade-show-specialized-in-service-robots-and-robot-related-technologies-this-event-aims-to-create-the-future-business-opportunity-by-introducing-research-development-and-manufacturing-of-robots-utilized-in-various-scenes-and-robotic-system-integration-2BPGXG2.jpg"
+      },
+      {
+        "service_name": "IoT Solutions",
+        "description": "Harness the power of IoT to monitor, control, and optimize your machinery and processes for greater performance and insights.",
+        "service_img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShRv8TGrkg0mJPkxP-kNdaqYbomwkUDT4-jw&s"
+      },
+      {
+        "service_name": "Machine Learning and AI Applications",
+        "description": "Leverage advanced machine learning and AI algorithms to unlock valuable insights, predict outcomes, and optimize processes.",
+        "service_img": "https://media.licdn.com/dms/image/D4D12AQF4oEL43REFXw/article-cover_image-shrink_720_1280/0/1684405027012?e=2147483647&v=beta&t=ndKsGXhlkEtxRZIJNK-ZAeQXoaiuiEu_tYB91f3jYZE"
+      },
+      {
+        "service_name": "Maintenance and Support",
+        "description": "We provide ongoing maintenance and support services to ensure the smooth operation of your machinery and systems.",
+        "service_img": "https://cdn.pixabay.com/photo/2021/11/23/20/31/technical-6819562_1280.png"
+      },
+      {
+        "service_name": "Custom Machinery Design",
+        "description": "Our team designs and fabricates custom machinery tailored to meet the unique needs and specifications of your operations.",
+        "service_img": "https://4.imimg.com/data4/LX/IB/MY-120484/mechanical-design-service-500x500.jpg"
+      }
+    ]
