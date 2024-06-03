@@ -1,10 +1,10 @@
 const Faq = () => {
   return (
-    <div className="my-5 px-2 flex justify-between  gap-5">
-      <div className="bg-neutral-500 w-1/2 p-5 px-12 rounded-lg">
+    <div className="lg:my-5 px-2 flex flex-col lg:flex-row justify-between  gap-5">
+      <div className="bg-neutral-500 lg:w-1/2 p-5 px-12 rounded-lg">
         <h3 className="text-2xl font-semibold text-white">Send Us a Message</h3>
         <p className="text-white">
-          If you have any questions or would like to <br /> book a session please
+          If you have any questions or would like to book a session please
           contact us.
         </p>
         <div className="flex gap-2">
@@ -56,9 +56,9 @@ const Faq = () => {
       </div>
         
          <div>
-              <div className="my-12 pl-12">
+              <div className="lg:my-12 pl-12">
               <h2 className="text-3xl font-bold text-gray-400">Most Popular Questions</h2>
-               <p>Most popular question comes from our customer. <br /> We try to Provide  Answer some of them.</p>
+               <p>Most popular question comes from <br /> our customer.  We try to Provide  Answer some of them.</p>
               </div>
               <div className="join join-vertical w-full">
   <div className="collapse collapse-arrow join-item border border-base-300">

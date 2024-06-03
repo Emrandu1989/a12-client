@@ -9,9 +9,9 @@ import img2 from '../../assets/New folder/chooseImg2.jpg';
 const ChooseUs = () => {
     return (
         <>
-              <div className='flex gap-3 px-12 mt-12'>
-              <div className='w-1/2'>
-                     <div className=''>
+              <div className='flex flex-col lg:flex-row gap-3 px-12 mt-12'>
+              <div className='lg:w-1/2 w-full'>
+                     <div>
                      <h5 className="text-red-400 font-bold text-xl mb-6">Why Choose Us</h5>
                          <h2 className='text-2xl font-semibold text-gray-400'>World class quality is our priority</h2>
                          <p className='mt-2 text-gray-600'>We provide best services and our product quality is 100% praiseworthy.Everyone should choose us</p>
@@ -19,31 +19,31 @@ const ChooseUs = () => {
                      </div>
                          
                          <div className='space-y-5'>
-                            <div className='flex gap-4 bg-gray-200 p-5 rounded'>
+                            <div className='flex justify-center items-center lg:flex-row flex-col gap-4 bg-gray-200 p-5 rounded'>
                                  <img className='w-16 h-16 rounded-full' src={settingImg} alt="" />
                                  <div>
-                                     <h3>Extended Equipment Lifespan</h3>
+                                     <h3 className='text-xl font-semibold'>Extended Equipment Lifespan</h3>
                                      <p>Quam adipiscing habitant lacinia odio proin class quisque in lectus nostra nibh</p>
                                  </div>
                             </div>
-                            <div className='flex gap-4 bg-gray-200 p-5 rounded'>
+                            <div className='flex justify-center items-center lg:flex-row flex-col gap-4 bg-gray-200 p-5 rounded'>
                                  <img className='w-16 h-16 rounded-full' src={safImg} alt="" />
                                  <div>
-                                     <h3>Improved Safety Standards</h3>
+                                     <h3 className='text-xl font-semibold'>Improved Safety Standards</h3>
                                      <p>Quam adipiscing habitant lacinia odio proin class quisque in lectus nostra nibh</p>
                                  </div>
                             </div>
-                            <div className='flex gap-4 bg-gray-200 p-5 rounded'>
+                            <div className='flex justify-center items-center lg:flex-row flex-col gap-4 bg-gray-200 p-5 rounded'>
                                  <img className='w-16 h-16 rounded-full' src={enhanceImg} alt="" />
                                  <div>
-                                     <h3>Enhanced Customer Satisfaction</h3>
+                                     <h3 className='text-xl font-semibold'>Enhanced Customer Satisfaction</h3>
                                      <p>Quam adipiscing habitant lacinia odio proin class quisque in lectus nostra nibh</p>
                                  </div>
                             </div>
-                            <div className='flex gap-4 bg-gray-200 p-5 rounded'>
+                            <div className='flex justify-center items-center lg:flex-row flex-col gap-4 bg-gray-200 p-5 rounded'>
                                  <img className='w-16 h-16 rounded-full' src={envirImg} alt="" />
                                  <div>
-                                     <h3>Environmental Sustainability</h3>
+                                     <h3 className='text-xl font-semibold'>Environmental Sustainability</h3>
                                      <p>Quam adipiscing habitant lacinia odio proin class quisque in lectus nostra nibh</p>
                                  </div>
                             </div>
