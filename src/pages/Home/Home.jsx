@@ -1,5 +1,6 @@
 import Banner from "../../components/Banner/Banner";
 import ChooseUs from "../../components/ChooseUs/ChooseUs";
+import Footer from "../../components/Footer/Footer";
 import Services from "../../components/Services/Services";
 import Testimonials from "../../components/Testimonials/Testimonials";
 
@@ -12,6 +13,7 @@ const Home = () => {
              <Services />
              <ChooseUs />
              <Testimonials/>
+            
         </div>
     );
 };
