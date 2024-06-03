@@ -2,11 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { FaGoogle } from "react-icons/fa";
-
+import { useState } from "react";
+import { FaRegEye } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
-     const {createUser, signInWithGoogle} = useAuth()
+     const {createUser, signInWithGoogle, } = useAuth()
       const navigate = useNavigate()
+      const [showPassword, setShowPassword] = useState(false)
       
       const handleSignUp = event =>{
           event.preventDefault();
@@ -33,6 +36,10 @@ const SignUp = () => {
           .then(result => {
             const loggedUser = result.user;
             console.log(loggedUser)
+             
+
+
+
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -82,9 +89,22 @@ const SignUp = () => {
         </div>
         <div className="form-control">
           <label className="label">
+            <span className="label-text">Role</span>
+          </label>
+          <select className="select select-bordered w-full max-w-xs">
+  <option disabled selected>What is your Role?</option>
+  <option>Employee</option>
+  <option>HR</option>
+</select>
+        </div>
+        <div className="form-control relative">
+          <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type="password" name="password" placeholder="password" className="input input-bordered" required />
+          <input type={showPassword ? "text" : "password"} name="password" placeholder="password" className="input input-bordered" required />
+          <div className="absolute top-12 right-4 text-2xl" onClick={()=>setShowPassword(!showPassword)}>
+              {showPassword ?  <FaEyeSlash/> : <FaRegEye />   }
+          </div>
           <label className="label">
             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
           </label>
