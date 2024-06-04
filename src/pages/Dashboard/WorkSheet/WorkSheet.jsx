@@ -1,9 +1,21 @@
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useEffect, useState } from "react";
 
+import useAuth from "../../../hooks/useAuth";
+
+
+import { useQuery } from "@tanstack/react-query";
 
 const WorkSheet = () => {
     const date = new Date();
-     const axiosPublic = useAxiosPublic();
+  
+   
+  
+     const [workSheet, setWorkSheet] = useState();
+     console.log(workSheet)
+
+  
+ 
+
     const handleWorkSheetData = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -33,6 +45,16 @@ const WorkSheet = () => {
        
         });
     }
+
+    useEffect(()=>{
+        fetch('http://localhost:3000/workSheet')
+        .then(res=>res.json())
+        .then(data=>{
+            setWorkSheet(data)
+        })
+ },[])
+
+ 
     
      
     return (
@@ -41,10 +63,10 @@ const WorkSheet = () => {
                  <div className="space-x-9">
                     <select className="p-1 rounded-lg" name="choice" id="">
                         <option value="">Choose Work</option>
-                        <option value="">Sales</option>
-                        <option value="">Support</option>
-                        <option value="">Content</option>
-                        <option value="">Paper-Work</option>
+                        <option value="sales">Sales</option>
+                        <option value="support">Support</option>
+                        <option value="content">Content</option>
+                        <option value="paper-work">Paper-Work</option>
                     </select>
                     <input name="hours" className="p-1 rounded-lg" type="number" placeholder="Hours" />
 
@@ -56,7 +78,7 @@ const WorkSheet = () => {
             <>
             <div className="overflow-x-auto">
   <table className="table">
-    {/* head */}
+ 
     <thead>
       <tr>
         <th>No.</th>
@@ -66,13 +88,15 @@ const WorkSheet = () => {
       </tr>
     </thead>
     <tbody>
-      {/* row 1 */}
-      <tr className="bg-base-200">
-        <th>1</th>
-        <td>Cy Ganderton</td>
-        <td>Quality Control Specialist</td>
-        <td>Blue</td>
-      </tr>
+    {/* { workSheet.map((workData, idx) =>  <tr
+      key={workData._id}
+    className="bg-base-200">
+        <th>{idx + 1}</th>
+        <td>{workData.choice}</td>
+        <td>{workData.hours} Hours</td>
+        <td>{workData.date}</td>
+      </tr> ).reverse()} */}
+     
    
     </tbody>
   </table>
