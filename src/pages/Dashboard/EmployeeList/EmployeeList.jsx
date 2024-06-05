@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const EmployeeList = () => {
@@ -35,17 +36,17 @@ const EmployeeList = () => {
       </tr>
     </thead>
     <tbody>
-      {allEmployee.map((employee, idx) =><tr
+      {allEmployee.slice().reverse().map((employee, idx) =><tr
        key={employee._id}
       className="bg-base-200">
-        <th>1</th>
+        <th>{idx + 1}</th>
         <td>{employee?.name}</td>
         <td>{employee.email}</td>
         <td>X</td>
         <th>{employee.bankAccount}</th>
         <td>{employee.salary}</td>
         <td> <button className="btn bg-green-600">Pay</button> </td>
-        <td>Blue</td>
+        <td><Link to={`/dashboard/details/${employee._id}`}><button className="btn btn-primary">Details</button> </Link></td>
       </tr> )}
      
  

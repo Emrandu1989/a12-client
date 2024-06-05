@@ -10,6 +10,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import WorkSheet from "../pages/Dashboard/WorkSheet/WorkSheet";
 import PrivateRoute from "./PrivateRoute";
 import EmployeeList from "../pages/Dashboard/EmployeeList/EmployeeList";
+import Details from "../pages/Dashboard/Details/Details";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
               element: <PrivateRoute>
                  <EmployeeList />
               </PrivateRoute>
+           },
+           {
+              path:"details/:id",
+              element: <PrivateRoute>
+                 <Details />
+              </PrivateRoute>,
+                loader: ({params}) => 
+                fetch(`http://localhost:3000/allEmployee/${params.id}`)
            },
        ]
      }
