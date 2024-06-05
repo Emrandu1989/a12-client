@@ -1,13 +1,12 @@
-import ServiceCard from "./ServiceCard";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
+import ServiceCard from "./ServiceCard";
 
 const Services = () => {
   const [services, setServices] = useState([]);
   //       const axiosPublic = useAxiosPublic();
   //      axiosPublic.get("/services")
   //        .then(res=>{
-  //               // console.log(res.data)
+  //               // //console.log(res.data)
   //              setServices(res.data)
   //        })
 
