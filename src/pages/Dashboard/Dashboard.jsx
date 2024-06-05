@@ -18,9 +18,9 @@ const Dashboard = () => {
                 </NavLink>{" "}
               </li>
               <li>
-                <NavLink to="/dashboard/addItems">
+                <NavLink to="/dashboard/employeeList">
                   <FaUtensils></FaUtensils>
-                  Add Items
+                  All Employee
                 </NavLink>{" "}
               </li>
               <li>
