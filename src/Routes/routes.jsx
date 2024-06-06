@@ -11,6 +11,7 @@ import WorkSheet from "../pages/Dashboard/WorkSheet/WorkSheet";
 import PrivateRoute from "./PrivateRoute";
 import EmployeeList from "../pages/Dashboard/EmployeeList/EmployeeList";
 import Details from "../pages/Dashboard/Details/Details";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 const router = createBrowserRouter([
     {
@@ -29,12 +30,18 @@ const router = createBrowserRouter([
             path: '/login',
             element:<Login/>
           },
+          {
+            path: '/contact',
+            element:<ContactUs/>
+          },
       ]
     },
 
      {
        path:"dashboard",
-       element: <Dashboard/>,
+       element: <PrivateRoute>
+         <Dashboard/>
+       </PrivateRoute>,
        children: [
            {
               path:"workSheet",
