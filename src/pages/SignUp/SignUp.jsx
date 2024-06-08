@@ -62,6 +62,7 @@ const Signup = () => {
           image: imageUrl,
           role: role,
           designation: designation,
+          veryfyed: false,
         }),
       });
 
