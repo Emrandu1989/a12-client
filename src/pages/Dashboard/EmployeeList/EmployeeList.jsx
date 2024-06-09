@@ -16,7 +16,7 @@ const EmployeeList = () => {
 
   const setVerified = (email) => {
     console.log(email);
-    fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
+    fetch(`http://localhost:3000/allEmployeeUpVery/${email}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

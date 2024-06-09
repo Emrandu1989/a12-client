@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import Box from "../Boxs/Box";
+import Profile from "../Profile/Profile";
 
 const AdminHome = () => {
   const { user } = useAuth();
@@ -33,6 +34,7 @@ const AdminHome = () => {
       {role === "HR" && (
         <>
           <Box />
+          <Profile />
           <h1 className="text-4xl font-bold mb-8 text-center">Hi, I'm an HR</h1>
           <div className="max-w-4xl mx-auto p-6 bg-white bg-opacity-30 rounded-lg shadow-xl">
             <h2 className="text-2xl font-semibold mb-4">All Worksheets</h2>
@@ -71,6 +73,13 @@ const AdminHome = () => {
       {role === "Employee" && (
         <>
           <Box></Box>
+          <Profile />
+        </>
+      )}
+      {role === "admin" && (
+        <>
+          <Box></Box>
+          <Profile />
         </>
       )}
     </div>
