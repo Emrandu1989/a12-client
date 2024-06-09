@@ -14,7 +14,9 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AllEmployeeList from "../pages/Dashboard/AllEmploeeList/AllEmploeeList";
 import Seemessage from "../pages/Dashboard/SeeMessage/Seemessage";
- 
+import HRRoute from "./HRRoute";
+import EmployeeRoute from "./EmployeeRoute";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -60,47 +62,41 @@ const router = createBrowserRouter([
       {
         path: "payment-history",
         element: (
-          <PrivateRoute>
+          <HRRoute>
             <PaymentHistory />
-          </PrivateRoute>
+          </HRRoute>
         ),
       },
       {
         path: "workSheet",
         element: (
-          <PrivateRoute>
+          <EmployeeRoute>
             <WorkSheet />
-          </PrivateRoute>
+          </EmployeeRoute>
         ),
       },
       {
         path: "employeeList",
         element: (
           <PrivateRoute>
-     
-              <EmployeeList />
-    
+            <EmployeeList />
           </PrivateRoute>
         ),
       },
       {
         path: "SeeMessage",
         element: (
-          <PrivateRoute>
-     
-              <Seemessage />
-    
-          </PrivateRoute>
+          <AdminRoute>
+            <Seemessage />
+          </AdminRoute>
         ),
       },
       {
         path: "allEmploeeList",
         element: (
-          <PrivateRoute>
-     
-              <AllEmployeeList />
-    
-          </PrivateRoute>
+          <HRRoute>
+            <AllEmployeeList />
+          </HRRoute>
         ),
       },
       {

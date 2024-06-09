@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const PaymentHistory = () => {
@@ -6,7 +6,7 @@ const PaymentHistory = () => {
 
     useEffect(() => {
         // Fetch payment history data from the server
-        fetch('http://localhost:3000/paymentHistory')
+        fetch('http://localhost:3000/payments')
             .then(res => res.json())
             .then(data => {
                 setPayments(data);
@@ -16,7 +16,7 @@ const PaymentHistory = () => {
 
     return (
         <motion.div 
-            className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg"
+            className=" mx-auto p-6 bg-white shadow-md rounded-lg"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -26,6 +26,7 @@ const PaymentHistory = () => {
                 <table className="w-full table-auto">
                     <thead>
                         <tr className="bg-gray-200 text-gray-800 uppercase text-sm leading-normal">
+                            <th className="py-3 px-6 text-left">Transaction ID</th>
                             <th className="py-3 px-6 text-left">Transaction Date</th>
                             <th className="py-3 px-6 text-left">Amount</th>
                         </tr>
@@ -39,8 +40,10 @@ const PaymentHistory = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.1 }}
                             >
-                                <td className="py-3 px-6">{payment.transactionDate}</td>
-                                <td className="py-3 px-6">{payment.amount}</td>
+                                <td className="py-3 px-6">{payment.transactionId}</td>
+                                <td className="py-3 px-6">{payment.SubmitDate}</td>
+                                <td className="py-3 px-6">{payment.price}</td>
+                                
                             </motion.tr>
                         ))}
                     </tbody>

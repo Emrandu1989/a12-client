@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
-const AdminRoute = ({ children }) => {
+const EmployeeRoute = ({ children }) => {
     const { user, logOut } = useContext(AuthContext);
     const email = user?.email || "";
     const [role, setRole] = useState("");
@@ -30,8 +30,8 @@ const AdminRoute = ({ children }) => {
     }, [email]);
 
     useEffect(() => {
-        if (!loading && role && role !== "admin") {
-            console.log("You are not an Admin. Logging out...");
+        if (!loading && role && role !== "Employee") {
+            console.log("You are not an Employee. Logging out...");
             logOut().then(() => {
                 navigate('/login', { state: { from: location }, replace: true });
             });
@@ -46,7 +46,7 @@ const AdminRoute = ({ children }) => {
         return <div>{error}</div>;
     }
 
-    return role === "admin" ? children : null;
+    return role === "Employee" ? children : null;
 };
 
-export default AdminRoute;
+export default EmployeeRoute;
