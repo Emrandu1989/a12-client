@@ -29,7 +29,7 @@ const AdminHome = () => {
   }, [role]);
 
   return (
-    <div className="min-h-screen   text-white">
+    <div className="min-h-screen  ">
       {role === "HR" && (
         <>
           <Box />
@@ -66,6 +66,11 @@ const AdminHome = () => {
               </table>
             </div>
           </div>
+        </>
+      )}
+      {role === "Employee" && (
+        <>
+          <Box></Box>
         </>
       )}
     </div>

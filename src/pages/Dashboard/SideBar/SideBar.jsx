@@ -35,6 +35,15 @@ const SideBar = () => {
                 Home
               </Link>
             </li>
+             
+            <li>
+              <Link
+                className="block capitalize py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
+                to="/dashboard"
+              >
+               {role} Home
+              </Link>
+            </li>
 
             {role === "HR" && (
               <>
@@ -81,19 +90,12 @@ const SideBar = () => {
                 <li>
                   <Link
                     className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
-                    to="workSheet"
+                    to="allEmploeeList"
                   >
-                    Work Sheet
+                    All Employee List
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
-                    to="payment-history"
-                  >
-                    Payment History
-                  </Link>
-                </li>
+          
               </>
             )}
 

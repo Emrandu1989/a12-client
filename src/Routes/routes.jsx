@@ -10,11 +10,16 @@ import EmployeeList from "../pages/Dashboard/EmployeeList/EmployeeList";
 import Details from "../pages/Dashboard/Details/Details";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import AllEmployeeList from "../pages/Dashboard/AllEmploeeList/AllEmploeeList";
+ 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayOut />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -52,6 +57,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "payment-history",
+        element: (
+          <PrivateRoute>
+            <PaymentHistory />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "workSheet",
         element: (
           <PrivateRoute>
@@ -63,7 +76,19 @@ const router = createBrowserRouter([
         path: "employeeList",
         element: (
           <PrivateRoute>
-            <EmployeeList />
+     
+              <EmployeeList />
+    
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "allEmploeeList",
+        element: (
+          <PrivateRoute>
+     
+              <AllEmployeeList />
+    
           </PrivateRoute>
         ),
       },

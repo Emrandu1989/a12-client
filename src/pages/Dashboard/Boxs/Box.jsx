@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
-import { FaUser, FaCog, FaExclamationTriangle, FaFileAlt } from "react-icons/fa";
+import {
+  FaUser,
+  FaCog,
+  FaExclamationTriangle,
+  FaFileAlt,
+  FaClock,
+  FaUserTag,
+} from "react-icons/fa";
 
 const Box = () => {
   const { user } = useAuth();
@@ -44,14 +51,25 @@ const Box = () => {
     }
   }, [email]);
 
-  const unverifiedUsersCount = users.filter(user => !user.verified).length;
+  const unverifiedUsersCount = users.filter((user) => !user.verified).length;
+  const userWorksheets = worksheets.filter(
+    (worksheet) => worksheet.email === email
+  );
 
-  const boxStyles = "bg-white bg-opacity-70 shadow-lg rounded-lg py-10 px-6 w-full md:w-[380px] flex items-center";
+  const totalHoursWorked = userWorksheets.reduce(
+    (total, worksheet) => total + Number(worksheet.hours),
+    0
+  );
+
+  const boxStyles =
+    "bg-white bg-opacity-70 shadow-lg rounded-lg py-10 px-6 w-full md:w-[400px] flex items-center justify-between transform transition-transform hover:scale-105";
   const colors = {
     totalUsers: "bg-gradient-to-r from-blue-400 to-purple-500",
     totalServices: "bg-gradient-to-r from-green-400 to-teal-500",
     unverifiedUsers: "bg-gradient-to-r from-red-400 to-pink-500",
     totalWorksheets: "bg-gradient-to-r from-yellow-400 to-orange-500",
+    totalHoursWorked: "bg-gradient-to-r from-indigo-400 to-blue-500",
+    userRole: "bg-gradient-to-r from-purple-400 to-indigo-500",
   };
 
   return (
@@ -68,25 +86,66 @@ const Box = () => {
           <div className={`${boxStyles} ${colors.totalServices}`}>
             <FaCog className="text-4xl text-white mr-4" />
             <div>
-              <h1 className="text-3xl font-bold text-white">{services.length}</h1>
+              <h1 className="text-3xl font-bold text-white">
+                {services.length}
+              </h1>
               <p className="text-white">Total Services</p>
             </div>
           </div>
           <div className={`${boxStyles} ${colors.unverifiedUsers}`}>
             <FaExclamationTriangle className="text-4xl text-white mr-4" />
             <div>
-              <h1 className="text-3xl font-bold text-white">{unverifiedUsersCount}</h1>
+              <h1 className="text-3xl font-bold text-white">
+                {unverifiedUsersCount}
+              </h1>
               <p className="text-white">Unverified Users</p>
             </div>
           </div>
           <div className={`${boxStyles} ${colors.totalWorksheets}`}>
             <FaFileAlt className="text-4xl text-white mr-4" />
             <div>
-              <h1 className="text-3xl font-bold text-white">{worksheets.length}</h1>
+              <h1 className="text-3xl font-bold text-white">
+                {worksheets.length}
+              </h1>
               <p className="text-white">Total Worksheets</p>
             </div>
           </div>
         </div>
+      )}
+      {role === "Employee" && (
+        <div className="flex flex-wrap justify-center gap-6">
+          <div className={`${boxStyles} ${colors.totalWorksheets}`}>
+            <FaFileAlt className="text-4xl text-white mr-4" />
+            <div>
+              <p className="text-white">My Worksheets</p>
+              <h1 className="text-3xl font-bold text-white">
+                {userWorksheets.length}
+              </h1>
+            </div>
+          </div>
+          <div className={`${boxStyles} ${colors.totalHoursWorked}`}>
+            <FaClock className="text-4xl text-white mr-4" />
+            <div>
+              <p className="text-white">Total Working Hour's</p>
+              <h1 className="text-3xl font-bold text-white">
+                {totalHoursWorked}
+              </h1>
+            </div>
+          </div>
+          <div className={`${boxStyles} ${colors.userRole}`}>
+            <FaUserTag className="text-4xl text-white mr-4" />
+            <div>
+              <p className="text-white">My Role</p>
+              <h1 className="text-3xl font-bold text-white">{role}</h1>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {role === "admin" && (
+        <>
+          <h1>Hello I am Admin</h1>
+        </>
       )}
     </div>
   );
