@@ -38,7 +38,7 @@ const AllEmployeeList = () => {
       );
     } catch (error) {
       console.error("Error HR employee:", error);
-    
+
       Swal.fire(
         "Error!",
         "An error occurred while firing the employee.",
@@ -49,7 +49,7 @@ const AllEmployeeList = () => {
 
   const handlePromote = async (email) => {
     try {
-   
+      // Update the user's role to "HR"
       await fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
         method: "PATCH",
         headers: {
@@ -62,7 +62,7 @@ const AllEmployeeList = () => {
 
       Swal.fire(
         "Done!",
-        `Employee with email ${email} has been HR.`,
+        `Employee with email ${email} has been promoted to HR.`,
         "success"
       );
     } catch (error) {
@@ -90,11 +90,6 @@ const AllEmployeeList = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         actionFunc(employee.email);
-        Swal.fire(
-          "Done!",
-          `${employee.name} has been ${actionText}d.`,
-          "success"
-        );
       }
     });
   };
@@ -117,7 +112,7 @@ const AllEmployeeList = () => {
               <td className="py-2 px-4 border-b">{employee.name}</td>
               <td className="py-2 px-4 border-b">{employee.designation}</td>
               <td className="py-2 px-4 border-b text-center">
-                {employee.role == "Employee" && (
+                {employee.role === "Employee" && (
                   <button
                     className="bg-green-500 text-white px-2 py-1 rounded"
                     onClick={() => confirmAction(employee, "promote")}
@@ -129,8 +124,15 @@ const AllEmployeeList = () => {
               <td className="py-2 px-4 border-b text-center">
                 {employee.role !== "fired" ? (
                   <button
-                    className="bg-red-500 text-white px-2 py-1 rounded"
-                    onClick={() => confirmAction(employee, "fire")}
+                    className={`bg-red-500 text-white px-2 py-1 rounded ${
+                      employee.role === "admin" ? "disabled:opacity-50" : ""
+                    }`}
+                    onClick={() =>
+                      employee.role !== "admin"
+                        ? confirmAction(employee, "fire")
+                        : null
+                    }
+                    disabled={employee.role === "admin"}
                   >
                     Fire
                   </button>

@@ -13,6 +13,7 @@ import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AllEmployeeList from "../pages/Dashboard/AllEmploeeList/AllEmploeeList";
+import Seemessage from "../pages/Dashboard/SeeMessage/Seemessage";
  
 
 const router = createBrowserRouter([
@@ -78,6 +79,16 @@ const router = createBrowserRouter([
           <PrivateRoute>
      
               <EmployeeList />
+    
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "SeeMessage",
+        element: (
+          <PrivateRoute>
+     
+              <Seemessage />
     
           </PrivateRoute>
         ),

@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     message: "",
   });
@@ -18,7 +17,7 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://formspree.io/f/xdoqrbjv", {
+    fetch("http://localhost:3000/message", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
@@ -45,7 +44,6 @@ const ContactUs = () => {
 
     // Reset form fields
     setFormData({
-      name: "",
       email: "",
       message: "",
     });
@@ -58,27 +56,10 @@ const ContactUs = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
-                htmlFor="name"
-                className="block text-gray-700 font-medium mb-2"
-              >
-                Employee Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 transition"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
                 htmlFor="email"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Employee Email
+                Your Email
               </label>
               <input
                 type="email"
@@ -117,15 +98,16 @@ const ContactUs = () => {
         </div>
       </div>
       <div className="w-full md:w-1/2 text-left">
-        <h2 className="text-3xl font-bold mb-4 text-gray-800">Employee Support</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">Contact Information</h2>
         <p className="text-gray-600 mb-6">
-          Have a question about our employee management services? Reach out to us and we'll respond as soon as possible.
+          Have any questions or opinions? Feel free to reach out to us using the form on the left. We'll be glad to hear from you!
         </p>
         <p className="text-gray-600">You can also contact us at:</p>
         <p className="text-gray-600 font-medium">
-          Email: support@employeemanagement.com
+          Email: contact@dummycompany.com
         </p>
         <p className="text-gray-600 font-medium">Phone: +1 234 567 890</p>
+        <p className="text-gray-600 font-medium">Address: 1234 Elm Street, City, Country</p>
       </div>
     </div>
   );

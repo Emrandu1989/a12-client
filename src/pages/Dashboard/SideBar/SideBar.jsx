@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const SideBar = () => {
   const { user } = useAuth();
   const email = user?.email || "";
-  const [role, setRole] = useState("")
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     if (email) {
@@ -22,11 +22,12 @@ const SideBar = () => {
     <div>
       <div className="h-full min-h-[100vh] w-64 bg-gray-900">
         <div>
-        
           <ul className="menu p-4 space-y-4">
-               <div>
-                <h1 className="capitalize text-white text-center my-3 text-2xl font-semibold">{role} Dashboard </h1>
-           </div>
+            <div>
+              <h1 className="capitalize text-white text-center my-3 text-2xl font-semibold">
+                {role} Dashboard{" "}
+              </h1>
+            </div>
             <li>
               <Link
                 className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
@@ -35,13 +36,13 @@ const SideBar = () => {
                 Home
               </Link>
             </li>
-             
+
             <li>
               <Link
                 className="block capitalize py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
                 to="/dashboard"
               >
-               {role} Home
+                {role} Home
               </Link>
             </li>
 
@@ -95,10 +96,16 @@ const SideBar = () => {
                     All Employee List
                   </Link>
                 </li>
-          
+                <li>
+                  <Link
+                    className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
+                    to="SeeMessage"
+                  >
+                    Message's
+                  </Link>
+                </li>
               </>
             )}
-
           </ul>
         </div>
       </div>
