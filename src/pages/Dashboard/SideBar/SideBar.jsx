@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import { useEffect, useState } from "react";
 
 const SideBar = () => {
   const { user } = useAuth();
@@ -9,7 +9,7 @@ const SideBar = () => {
 
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:3000/allEmployees/${email}`)
+      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setRole(data?.role);

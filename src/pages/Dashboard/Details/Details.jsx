@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import {
-  BarChart,
   Bar,
+  BarChart,
+  Cell,
+  Legend,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Legend,
-  Cell,
 } from "recharts";
-import { useLoaderData } from "react-router-dom";
 
 const Details = () => {
   const data = useLoaderData();
@@ -17,7 +17,7 @@ const Details = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/payments/${data.email}`)
+    fetch(`https://machine-world-server.vercel.app/payments/${data.email}`)
       .then((response) => response.json())
       .then((data) => {
         setPaymentData(data);
@@ -30,13 +30,17 @@ const Details = () => {
   }, [data.email]);
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    );
   }
 
   // Define a function to get the color based on the value
   const getBarColor = (amount) => {
-    if (amount <= 300) return "#ff0000";  // red
-    if (amount <= 500) return "#ffff00";  // yellow
+    if (amount <= 300) return "#ff0000"; // red
+    if (amount <= 500) return "#ffff00"; // yellow
     return "#00ff00"; // green
   };
 

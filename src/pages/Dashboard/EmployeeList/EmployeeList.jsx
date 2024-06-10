@@ -1,8 +1,8 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../CheckOut";
 
 const EmployeeList = () => {
@@ -13,7 +13,7 @@ const EmployeeList = () => {
   const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
   const fetchSheet = () => {
-    fetch("http://localhost:3000/allEmployee")
+    fetch("https://machine-world-server.vercel.app/allEmployee")
       .then((res) => res.json())
       .then((data) => {
         setAllEmployee(data);
@@ -21,7 +21,7 @@ const EmployeeList = () => {
   };
 
   const setVerified = (email) => {
-    fetch(`http://localhost:3000/verifyEmployee/${email}`, {
+    fetch(`https://machine-world-server.vercel.app/verifyEmployee/${email}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -136,19 +136,15 @@ const EmployeeList = () => {
       </div>
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
-      <div className="flex justify-between items-center">
-     
-          <h1 className="font-semibold text-xl my-2 text-green-700 ">
-            Total Payable Amount : ${" "}
-            {selectedEmployee && selectedEmployee.salary}
-          </h1>
-          <button
-            className="btn bg-red-500 text-white "
-            onClick={closeModal}
-          >
-           X
-          </button>
-      </div>
+          <div className="flex justify-between items-center">
+            <h1 className="font-semibold text-xl my-2 text-green-700 ">
+              Total Payable Amount : ${" "}
+              {selectedEmployee && selectedEmployee.salary}
+            </h1>
+            <button className="btn bg-red-500 text-white " onClick={closeModal}>
+              X
+            </button>
+          </div>
           <label htmlFor="month">Month</label>
           <select
             id="month"
@@ -197,7 +193,6 @@ const EmployeeList = () => {
               />
             </Elements>
           )}
-    
         </div>
       </dialog>
     </>

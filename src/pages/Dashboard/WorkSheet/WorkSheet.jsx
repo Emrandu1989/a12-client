@@ -12,7 +12,7 @@ const WorkSheet = () => {
 
   // Fetch and set worksheet data
   const fetchSheet = () => {
-    fetch("http://localhost:3000/workSheet")
+    fetch("https://machine-world-server.vercel.app/workSheet")
       .then((res) => res.json())
       .then((data) => {
         setWorkSheet(data);
@@ -22,7 +22,7 @@ const WorkSheet = () => {
   // Fetch the email of the current user and worksheet data on component mount
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:3000/allEmployees/${email}`)
+      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setDatasEmail(data?.email);
@@ -40,7 +40,7 @@ const WorkSheet = () => {
     const date = form.date.value;
     const workData = { choice, hours, date, name, email };
 
-    fetch("http://localhost:3000/workSheet", {
+    fetch("https://machine-world-server.vercel.app/workSheet", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

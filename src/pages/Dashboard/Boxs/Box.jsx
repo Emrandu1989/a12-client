@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../../../hooks/useAuth";
 import {
-  FaUser,
+  FaClock,
   FaCog,
+  FaEnvelope,
   FaExclamationTriangle,
   FaFileAlt,
-  FaClock,
+  FaUser,
+  FaUserShield,
   FaUserTag,
-  FaEnvelope,
   FaUsers,
-  FaUserShield
 } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const Box = () => {
   const { user } = useAuth();
@@ -22,7 +22,7 @@ const Box = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/allEmployee`)
+    fetch(`https://machine-world-server.vercel.app/allEmployee`)
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
@@ -30,7 +30,7 @@ const Box = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/services`)
+    fetch(`https://machine-world-server.vercel.app/services`)
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
@@ -38,7 +38,7 @@ const Box = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/workSheet`)
+    fetch(`https://machine-world-server.vercel.app/workSheet`)
       .then((res) => res.json())
       .then((data) => {
         setWorksheets(data);
@@ -46,7 +46,7 @@ const Box = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/message`)
+    fetch(`https://machine-world-server.vercel.app/message`)
       .then((res) => res.json())
       .then((data) => {
         setMessages(data);
@@ -55,7 +55,7 @@ const Box = () => {
 
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:3000/allEmployees/${email}`)
+      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setRole(data?.role);
@@ -170,7 +170,9 @@ const Box = () => {
           <div className={`${boxStyles} ${colors.totalMessages}`}>
             <FaEnvelope className="text-4xl text-white mr-4" />
             <div>
-              <h1 className="text-3xl font-bold text-white">{messages.length}</h1>
+              <h1 className="text-3xl font-bold text-white">
+                {messages.length}
+              </h1>
               <p className="text-white">Total Messages</p>
             </div>
           </div>
@@ -184,7 +186,9 @@ const Box = () => {
           <div className={`${boxStyles} ${colors.verifiedUsers}`}>
             <FaUserShield className="text-4xl text-white mr-4" />
             <div>
-              <h1 className="text-3xl font-bold text-white">{verifiedUsersCount}</h1>
+              <h1 className="text-3xl font-bold text-white">
+                {verifiedUsersCount}
+              </h1>
               <p className="text-white">Verified Users</p>
             </div>
           </div>

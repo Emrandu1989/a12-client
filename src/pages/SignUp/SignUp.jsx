@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { FaGoogle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { FaRegEye, FaRegEyeSlash, FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
-import useAuth from "../../hooks/useAuth"; // Make sure this path is correct
 import { imageUpload } from "../../api/utils/index";
+import useAuth from "../../hooks/useAuth"; // Make sure this path is correct
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -49,22 +49,25 @@ const Signup = () => {
       await createUser(email, password);
       await updateUserProfile(name, imageUrl);
 
-      const response = await fetch(`http://localhost:3000/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          bankAccount: bankAccount,
-          salary: salary,
-          image: imageUrl,
-          role: role,
-          designation: designation,
-          veryfyed: false,
-        }),
-      });
+      const response = await fetch(
+        `https://machine-world-server.vercel.app/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            bankAccount: bankAccount,
+            salary: salary,
+            image: imageUrl,
+            role: role,
+            designation: designation,
+            veryfyed: false,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to create user");

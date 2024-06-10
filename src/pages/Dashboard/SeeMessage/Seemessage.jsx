@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
@@ -12,7 +12,9 @@ const Seemessage = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch("http://localhost:3000/message");
+      const response = await fetch(
+        "https://machine-world-server.vercel.app/message"
+      );
       const data = await response.json();
       setMessages(data);
     } catch (error) {
@@ -38,7 +40,7 @@ const Seemessage = () => {
 
   const deleteMessage = async (id) => {
     try {
-      await fetch(`http://localhost:3000/message/${id}`, {
+      await fetch(`https://machine-world-server.vercel.app/message/${id}`, {
         method: "DELETE",
       });
       // After deletion, fetch updated messages

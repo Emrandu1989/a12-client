@@ -11,7 +11,7 @@ const AdminHome = () => {
 
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:3000/allEmployees/${email}`)
+      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setRole(data?.role);
@@ -21,7 +21,7 @@ const AdminHome = () => {
 
   useEffect(() => {
     if (role === "HR") {
-      fetch(`http://localhost:3000/workSheet`)
+      fetch(`https://machine-world-server.vercel.app/workSheet`)
         .then((res) => res.json())
         .then((data) => {
           setWorksheets(data);

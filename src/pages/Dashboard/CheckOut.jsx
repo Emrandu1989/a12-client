@@ -1,7 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 
 const CheckoutForm = ({ totalToPay, selectedEmail, month, year }) => {
@@ -18,7 +18,7 @@ const CheckoutForm = ({ totalToPay, selectedEmail, month, year }) => {
   }/${today.getFullYear()}`;
   useEffect(() => {
     if (totalToPay > 0) {
-      fetch("http://localhost:3000/create-payment", {
+      fetch("https://machine-world-server.vercel.app/create-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +93,7 @@ const CheckoutForm = ({ totalToPay, selectedEmail, month, year }) => {
         year: year,
       };
 
-      fetch("http://localhost:3000/payments", {
+      fetch("https://machine-world-server.vercel.app/payments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

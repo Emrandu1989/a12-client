@@ -1,23 +1,23 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayOut from "../LayOut/MainLayOut";
-import SignUp from "../pages/SignUp/SignUp";
-import Login from "../pages/Login/Login";
-import Home from "../pages/Home/Home";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import WorkSheet from "../pages/Dashboard/WorkSheet/WorkSheet";
-import PrivateRoute from "./PrivateRoute";
-import EmployeeList from "../pages/Dashboard/EmployeeList/EmployeeList";
-import Details from "../pages/Dashboard/Details/Details";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
-import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AllEmployeeList from "../pages/Dashboard/AllEmploeeList/AllEmploeeList";
-import Seemessage from "../pages/Dashboard/SeeMessage/Seemessage";
-import HRRoute from "./HRRoute";
-import EmployeeRoute from "./EmployeeRoute";
-import AdminRoute from "./AdminRoute";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Details from "../pages/Dashboard/Details/Details";
+import EmployeeList from "../pages/Dashboard/EmployeeList/EmployeeList";
 import EHostory from "../pages/Dashboard/EmployeePayHis/Hostory";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import Seemessage from "../pages/Dashboard/SeeMessage/Seemessage";
+import WorkSheet from "../pages/Dashboard/WorkSheet/WorkSheet";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Home from "../pages/Home/Home";
+import Login from "../pages/Login/Login";
+import SignUp from "../pages/SignUp/SignUp";
+import AdminRoute from "./AdminRoute";
+import EmployeeRoute from "./EmployeeRoute";
+import HRRoute from "./HRRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -116,7 +116,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/allEmployee/${params.id}`),
+          fetch(
+            `https://machine-world-server.vercel.app/allEmployee/${params.id}`
+          ),
       },
     ],
   },

@@ -10,7 +10,9 @@ const AllEmployeeList = () => {
 
   const fetchEmployees = async () => {
     try {
-      const response = await fetch("http://localhost:3000/allEmployee");
+      const response = await fetch(
+        "https://machine-world-server.vercel.app/allEmployee"
+      );
       const data = await response.json();
       setEmployees(data);
     } catch (error) {
@@ -21,13 +23,16 @@ const AllEmployeeList = () => {
   const handleFire = async (email) => {
     try {
       // Update the user's role to "fired"
-      await fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, role: "fired" }),
-      });
+      await fetch(
+        `https://machine-world-server.vercel.app/allEmployeeUp/${email}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, role: "fired" }),
+        }
+      );
 
       fetchEmployees();
 
@@ -50,13 +55,16 @@ const AllEmployeeList = () => {
   const handlePromote = async (email) => {
     try {
       // Update the user's role to "HR"
-      await fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, role: "HR" }),
-      });
+      await fetch(
+        `https://machine-world-server.vercel.app/allEmployeeUp/${email}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, role: "HR" }),
+        }
+      );
 
       fetchEmployees();
 
@@ -68,11 +76,7 @@ const AllEmployeeList = () => {
     } catch (error) {
       console.error("Error HR employee:", error);
       // Show error message if any
-      Swal.fire(
-        "Error!",
-        "An error occurred while HR the employee.",
-        "error"
-      );
+      Swal.fire("Error!", "An error occurred while HR the employee.", "error");
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { imageUpload } from "../../../api/utils/index";
+import useAuth from "../../../hooks/useAuth";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -12,7 +12,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:3000/allEmployees/${email}`)
+      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setProfileData(data);
@@ -42,13 +42,16 @@ const Profile = () => {
     if (image) {
       try {
         const imageUrl = await imageUpload(image);
-        await fetch(`http://localhost:3000/updateProfile/${email}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ image: imageUrl }),
-        });
+        await fetch(
+          `https://machine-world-server.vercel.app/updateProfile/${email}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ image: imageUrl }),
+          }
+        );
 
         setProfileData((prevProfileData) => ({
           ...prevProfileData,

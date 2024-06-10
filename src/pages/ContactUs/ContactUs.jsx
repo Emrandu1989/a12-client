@@ -17,7 +17,7 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/message", {
+    fetch("https://machine-world-server.vercel.app/message", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
@@ -98,16 +98,21 @@ const ContactUs = () => {
         </div>
       </div>
       <div className="w-full md:w-1/2 text-left">
-        <h2 className="text-3xl font-bold mb-4 text-gray-800">Contact Information</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">
+          Contact Information
+        </h2>
         <p className="text-gray-600 mb-6">
-          Have any questions or opinions? Feel free to reach out to us using the form on the left. We'll be glad to hear from you!
+          Have any questions or opinions? Feel free to reach out to us using the
+          form on the left. We'll be glad to hear from you!
         </p>
         <p className="text-gray-600">You can also contact us at:</p>
         <p className="text-gray-600 font-medium">
           Email: contact@dummycompany.com
         </p>
         <p className="text-gray-600 font-medium">Phone: +1 234 567 890</p>
-        <p className="text-gray-600 font-medium">Address: 1234 Elm Street, City, Country</p>
+        <p className="text-gray-600 font-medium">
+          Address: 1234 Elm Street, City, Country
+        </p>
       </div>
     </div>
   );
