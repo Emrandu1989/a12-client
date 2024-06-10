@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 
 const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     // Fetch payment history data from the server
@@ -15,6 +17,14 @@ const PaymentHistory = () => {
         console.error("Error fetching payment history:", error)
       );
   }, []);
+
+  // Get current payments
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPayments = payments.slice().reverse().slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <motion.div
@@ -37,7 +47,7 @@ const PaymentHistory = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
-            {payments.slice().reverse().map((payment) => (
+            {currentPayments.map((payment) => (
               <motion.tr
                 key={payment._id}
                 className="border-b border-gray-200 hover:bg-gray-100"
@@ -49,12 +59,37 @@ const PaymentHistory = () => {
                 <td className="py-3 px-6">{payment.email}</td>
                 <td className="py-3 px-6">{payment.month}</td>
                 <td className="py-3 px-6">{payment.year}</td>
-                <td className="py-3 px-6">{payment.submitDate}</td>
+                <td className="py-3 px-6">{payment.SubmitDate}</td>
                 <td className="py-3 px-6">{payment.price}</td>
               </motion.tr>
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="flex justify-center mt-4">
+        <button
+          className={`btn ${currentPage === 1 ? 'btn-disabled' : ''}`}
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        {[...Array(Math.ceil(payments.length / itemsPerPage)).keys()].map((page) => (
+          <button
+            key={page + 1}
+            className={`btn mx-1 ${currentPage === page + 1 ? 'btn-active' : ''}`}
+            onClick={() => paginate(page + 1)}
+          >
+            {page + 1}
+          </button>
+        ))}
+        <button
+          className={`btn ${currentPage === Math.ceil(payments.length / itemsPerPage) ? 'btn-disabled' : ''}`}
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === Math.ceil(payments.length / itemsPerPage)}
+        >
+          Next
+        </button>
       </div>
     </motion.div>
   );
