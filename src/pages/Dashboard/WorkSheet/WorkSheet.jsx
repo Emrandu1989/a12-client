@@ -5,61 +5,70 @@ import useAuth from "../../../hooks/useAuth";
 const WorkSheet = () => {
   const date = new Date();
   const { user } = useAuth();
-  const name = user?.displayName;
-  const email = user?.email;
   const [workSheet, setWorkSheet] = useState([]);
-  const [datasemail, setDatasEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
-  // Fetch and set worksheet data
-  const fetchSheet = () => {
-    fetch("https://machine-world-server.vercel.app/workSheet")
-      .then((res) => res.json())
-      .then((data) => {
-        setWorkSheet(data);
-      });
-  };
-
-  // Fetch the email of the current user and worksheet data on component mount
   useEffect(() => {
-    if (email) {
-      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setDatasEmail(data?.email);
-        });
-    }
-    fetchSheet();
-  }, [email]);
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`https://machine-world-server.vercel.app/allEmployees/${user.email}`);
+        const data = await response.json();
+        setUserEmail(data?.email);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
 
-  // Handle form submission
-  const handleWorkSheetData = (e) => {
+    const fetchSheetData = async () => {
+      try {
+        const response = await fetch("https://machine-world-server.vercel.app/workSheet");
+        const data = await response.json();
+        setWorkSheet(data);
+      } catch (error) {
+        console.error("Error fetching worksheet data:", error);
+      }
+    };
+
+    if (user.email) {
+      fetchUserData();
+    }
+    fetchSheetData();
+  }, [user.email]);
+
+  const handleWorkSheetData = async (e) => {
     e.preventDefault();
     const form = e.target;
     const choice = form.choice.value;
     const hours = form.hours.value;
     const date = form.date.value;
+    const name = user.displayName;
+    const email = user.email;
     const workData = { choice, hours, date, name, email };
 
-    fetch("https://machine-world-server.vercel.app/workSheet", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(workData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        Swal.fire({
-          title: "Success",
-          text: "Your Work Sheet Will Added",
-          icon: "success",
-        });
-        fetchSheet();
-        form.reset();
-      })
-      .catch((error) => {
-        console.error(error);
+    try {
+      const response = await fetch("https://machine-world-server.vercel.app/workSheet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(workData),
       });
+      const data = await response.json();
+      Swal.fire({
+        title: "Success",
+        text: "Your Work Sheet Will Added",
+        icon: "success",
+      });
+      setWorkSheet([...workSheet, data]);
+      form.reset();
+    } catch (error) {
+      console.error("Error adding work sheet data:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Failed to add work sheet data",
+        icon: "error",
+      });
+    }
   };
 
   return (
@@ -107,15 +116,15 @@ const WorkSheet = () => {
           </thead>
           <tbody>
             {workSheet
-              .filter((workData) => workData.email === datasemail)
+              .filter((workData) => workData?.email === userEmail)
               .slice()
               .reverse()
               .map((workData, index) => (
-                <tr key={workData._id} className="bg-base-200">
+                <tr key={workData?._id} className="bg-base-200">
                   <th>{index + 1}</th>
-                  <td>{workData.choice}</td>
-                  <td>{workData.hours} Hours</td>
-                  <td>{workData.date}</td>
+                  <td>{workData?.choice}</td>
+                  <td>{workData?.hours} Hours</td>
+                  <td>{workData?.date}</td>
                 </tr>
               ))}
           </tbody>

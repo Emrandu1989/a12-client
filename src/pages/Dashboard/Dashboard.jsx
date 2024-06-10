@@ -1,13 +1,5 @@
-import {
-  FaBook,
-  FaEnvelope,
-  FaHome,
-  FaList,
-  FaSearch,
-  FaUserAlt,
-  FaUtensils,
-} from "react-icons/fa";
-import { NavLink, Outlet } from "react-router-dom";
+ 
+import { Outlet } from "react-router-dom";
 import SideBar from "./SideBar/SideBar";
 
 const Dashboard = () => {

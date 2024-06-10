@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { imageUpload } from "../../../api/utils/index";
 import useAuth from "../../../hooks/useAuth";
 
 const Profile = () => {
   const { user } = useAuth();
-  const email = user?.email || "";
   const [profileData, setProfileData] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    if (email) {
-      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
-        .then((res) => res.json())
-        .then((data) => {
+    const fetchProfileData = async () => {
+      if (user?.email) {
+        try {
+          const response = await fetch(
+            `https://machine-world-server.vercel.app/allEmployees/${user?.email}`
+          );
+          const data = await response.json();
           setProfileData(data);
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error fetching profile data:", error);
-        });
-    }
-  }, [email]);
+        }
+      }
+    };
+
+    fetchProfileData();
+  }, [user?.email]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -43,7 +47,7 @@ const Profile = () => {
       try {
         const imageUrl = await imageUpload(image);
         await fetch(
-          `https://machine-world-server.vercel.app/updateProfile/${email}`,
+          `https://machine-world-server.vercel.app/updateProfile/${user?.email}`,
           {
             method: "PATCH",
             headers: {
@@ -83,7 +87,7 @@ const Profile = () => {
         <div className="flex items-center space-x-4 mb-4">
           <div className="relative">
             <img
-              src={profileData.image || "https://via.placeholder.com/100"}
+              src={profileData?.image || "https://via.placeholder.com/100"}
               alt="User profile"
               className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
             />
@@ -95,26 +99,26 @@ const Profile = () => {
             </button>
           </div>
           <div className="flex-1">
-            <h3 className="text-xl font-semibold">{profileData.name}</h3>
-            <p className="text-gray-600">{email}</p>
+            <h3 className="text-xl font-semibold">{profileData?.name}</h3>
+            <p className="text-gray-600">{user?.email}</p>
           </div>
         </div>
         <div className="space-y-4">
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded">
             <strong>Role:</strong>
-            <span>{profileData.role}</span>
+            <span>{profileData?.role}</span>
           </div>
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded">
             <strong>Salary:</strong>
-            <span>${profileData.salary}</span>
+            <span>${profileData?.salary}</span>
           </div>
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded">
             <strong>Designation:</strong>
-            <span>{profileData.designation}</span>
+            <span>{profileData?.designation}</span>
           </div>
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded">
             <strong>Bank Account:</strong>
-            <span>{profileData.bankAccount}</span>
+            <span>{profileData?.bankAccount}</span>
           </div>
         </div>
       </div>
@@ -124,7 +128,7 @@ const Profile = () => {
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
             <h2 className="text-xl font-bold mb-4">Change Profile Photo</h2>
             <img
-              src={profileData.image || "https://via.placeholder.com/100"}
+              src={profileData?.image || "https://via.placeholder.com/100"}
               alt="Current profile"
               className="w-24 h-24 rounded-full object-cover border-4 border-blue-500 mb-4 mx-auto"
             />

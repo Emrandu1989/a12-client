@@ -50,7 +50,7 @@ const PaymentHistory = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
-            {currentPayments.map((payment) => (
+            {currentPayments?.map((payment) => (
               <motion.tr
                 key={payment._id}
                 className="border-b border-gray-200 hover:bg-gray-100"
@@ -77,7 +77,7 @@ const PaymentHistory = () => {
         >
           Previous
         </button>
-        {[...Array(Math.ceil(payments.length / itemsPerPage)).keys()].map(
+        {[...Array(Math.ceil(payments?.length / itemsPerPage)).keys()].map(
           (page) => (
             <button
               key={page + 1}
@@ -92,12 +92,12 @@ const PaymentHistory = () => {
         )}
         <button
           className={`btn ${
-            currentPage === Math.ceil(payments.length / itemsPerPage)
+            currentPage === Math.ceil(payments?.length / itemsPerPage)
               ? "btn-disabled"
               : ""
           }`}
           onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(payments.length / itemsPerPage)}
+          disabled={currentPage === Math.ceil(payments?.length / itemsPerPage)}
         >
           Next
         </button>

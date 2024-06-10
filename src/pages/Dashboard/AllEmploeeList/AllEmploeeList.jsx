@@ -42,7 +42,7 @@ const AllEmployeeList = () => {
         "success"
       );
     } catch (error) {
-      console.error("Error HR employee:", error);
+      console.error("Error firing employee:", error);
 
       Swal.fire(
         "Error!",
@@ -74,9 +74,13 @@ const AllEmployeeList = () => {
         "success"
       );
     } catch (error) {
-      console.error("Error HR employee:", error);
-      // Show error message if any
-      Swal.fire("Error!", "An error occurred while HR the employee.", "error");
+      console.error("Error promoting employee:", error);
+
+      Swal.fire(
+        "Error!",
+        "An error occurred while promoting the employee.",
+        "error"
+      );
     }
   };
 

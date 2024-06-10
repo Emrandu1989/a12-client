@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 
-const EHostory = () => {
+const EHistory = () => {
   const [userPayments, setUserPayments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -10,16 +10,19 @@ const EHostory = () => {
   const email = user?.email;
 
   useEffect(() => {
-    if (email) {
-      fetch(`https://machine-world-server.vercel.app/payments/${email}`)
-        .then((res) => res.json())
-        .then((data) => {
+    const fetchData = async () => {
+      try {
+        if (email) {
+          const response = await fetch(`https://machine-world-server.vercel.app/payments/${email}`);
+          const data = await response.json();
           setUserPayments(data);
-        })
-        .catch((error) =>
-          console.error("Error fetching payment history:", error)
-        );
-    }
+        }
+      } catch (error) {
+        console.error("Error fetching payment history:", error);
+      }
+    };
+
+    fetchData();
   }, [email]);
 
   // Get current payments
@@ -43,7 +46,7 @@ const EHostory = () => {
       >
         <h2 className="text-2xl font-semibold mb-4">Payment History</h2>
         <div className="overflow-x-auto">
-          {userPayments.length > 0 ? (
+          {userPayments?.length > 0 ? (
             <>
               <table className="w-full table-auto">
                 <thead>
@@ -83,7 +86,7 @@ const EHostory = () => {
                 </button>
                 {[
                   ...Array(
-                    Math.ceil(userPayments.length / itemsPerPage)
+                    Math.ceil(userPayments?.length / itemsPerPage)
                   ).keys(),
                 ].map((page) => (
                   <button
@@ -99,14 +102,14 @@ const EHostory = () => {
                 <button
                   className={`btn ${
                     currentPage ===
-                    Math.ceil(userPayments.length / itemsPerPage)
+                    Math.ceil(userPayments?.length / itemsPerPage)
                       ? "btn-disabled"
                       : ""
                   }`}
                   onClick={() => paginate(currentPage + 1)}
                   disabled={
                     currentPage ===
-                    Math.ceil(userPayments.length / itemsPerPage)
+                    Math.ceil(userPayments?.length / itemsPerPage)
                   }
                 >
                   Next
@@ -124,4 +127,4 @@ const EHostory = () => {
   );
 };
 
-export default EHostory;
+export default EHistory;

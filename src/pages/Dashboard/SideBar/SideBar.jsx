@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const SideBar = () => {
   const { user } = useAuth();
@@ -8,16 +9,22 @@ const SideBar = () => {
   const [role, setRole] = useState("");
 
   useEffect(() => {
-    if (email) {
-      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
-        .then((res) => res.json())
-        .then((data) => {
+    const fetchUserRole = async () => {
+      try {
+        if (email) {
+          const response = await fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`);
+          const data = await response.json();
           setRole(data?.role);
-        });
-    }
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+        Swal.fire("Error!", "An error occurred while fetching user role.", "error");
+      }
+    };
+
+    fetchUserRole();
   }, [email]);
 
-  console.log(role);
   return (
     <div>
       <div className="h-full min-h-[100vh] w-64 bg-gray-900">

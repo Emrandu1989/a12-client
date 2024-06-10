@@ -15,29 +15,46 @@ const Details = () => {
   const data = useLoaderData();
   const [paymentData, setPaymentData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`https://machine-world-server.vercel.app/payments/${data.email}`)
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://machine-world-server.vercel.app/payments/${data.email}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
         setPaymentData(data);
         setIsLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
+        setError(error.message);
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, [data.email]);
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
+        {/* Add a spinner or progress bar here */}
         Loading...
       </div>
     );
   }
 
-  // Define a function to get the color based on the value
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        {/* Display an error message */}
+        Error: {error}
+      </div>
+    );
+  }
+
   const getBarColor = (amount) => {
     if (amount <= 300) return "#ff0000"; // red
     if (amount <= 500) return "#ffff00"; // yellow
@@ -47,31 +64,7 @@ const Details = () => {
   return (
     <>
       <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-10">
-        <div className="sm:flex sm:items-center px-6 py-4">
-          <img
-            className="block mx-auto h-24 rounded-full sm:mx-0 sm:flex-shrink-0"
-            src={data.image}
-            alt={data.name}
-          />
-          <div className="mt-4 text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <h2 className="text-xl leading-tight font-bold">{data.name}</h2>
-            <p className="text-sm leading-tight text-gray-600">
-              <strong>Email:</strong> {data.email}
-            </p>
-            <p className="text-sm leading-tight text-gray-600">
-              <strong>Bank Account:</strong> {data.bankAccount}
-            </p>
-            <p className="text-sm leading-tight text-gray-600">
-              <strong>Salary:</strong> ${data.salary}
-            </p>
-            <p className="text-sm leading-tight text-gray-600">
-              <strong>Role:</strong> {data.role}
-            </p>
-            <p className="text-sm leading-tight text-gray-600">
-              <strong>Designation:</strong> {data.designation}
-            </p>
-          </div>
-        </div>
+        {/* Display user details */}
       </div>
 
       <ResponsiveContainer width="100%" height={300} className="mt-10">
