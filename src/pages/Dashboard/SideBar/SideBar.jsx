@@ -79,7 +79,7 @@ const SideBar = () => {
                 <li>
                   <Link
                     className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
-                    to="payment-history"
+                    to="PaymentHisTory"
                   >
                     Payment History
                   </Link>

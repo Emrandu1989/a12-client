@@ -17,6 +17,7 @@ import Seemessage from "../pages/Dashboard/SeeMessage/Seemessage";
 import HRRoute from "./HRRoute";
 import EmployeeRoute from "./EmployeeRoute";
 import AdminRoute from "./AdminRoute";
+import EHostory from "../pages/Dashboard/EmployeePayHis/Hostory";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,14 @@ const router = createBrowserRouter([
           <AdminRoute>
             <Seemessage />
           </AdminRoute>
+        ),
+      },
+      {
+        path: "PaymentHisTory",
+        element: (
+          <EmployeeRoute>
+            <EHostory />
+          </EmployeeRoute>
         ),
       },
       {

@@ -4,8 +4,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
-
-const CheckoutForm = ({totalToPay}) => {
+const CheckoutForm = ({ totalToPay, selectedEmail, month, year }) => {
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [transactionId, setTransactionId] = useState("");
@@ -86,13 +85,15 @@ const CheckoutForm = ({totalToPay}) => {
       setTransactionId(paymentIntent.id);
 
       const payment = {
-        email: user.email,
+        email: selectedEmail,
         price: totalToPay,
         transactionId: paymentIntent.id,
         SubmitDate: currentDate,
+        month: month,
+        year: year,
       };
 
-      fetch("https://jolly-home-server.vercel.app/payments", {
+      fetch("http://localhost:3000/payments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -140,7 +141,7 @@ const CheckoutForm = ({totalToPay}) => {
         }}
       />
       <button
-        className="btn btn-sm btn-primary my-4"
+        className="btn bg-green-500 text-white my-4"
         type="submit"
         disabled={!stripe || !clientSecret}
       >

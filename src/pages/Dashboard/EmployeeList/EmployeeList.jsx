@@ -7,7 +7,9 @@ import CheckoutForm from "../CheckOut";
 
 const EmployeeList = () => {
   const [allEmployee, setAllEmployee] = useState([]);
-  const [selectedEmployeeSalary, setSelectedEmployeeSalary] = useState(0);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
   const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
   const fetchSheet = () => {
@@ -47,14 +49,26 @@ const EmployeeList = () => {
       });
   };
 
-  const handlePay = (salary) => {
-    setSelectedEmployeeSalary(salary);
+  const handlePay = (employee) => {
+    setSelectedEmployee(employee);
     document.getElementById("my_modal_1").showModal();
   };
 
   useEffect(() => {
     fetchSheet();
   }, []);
+
+  const handleMonthChange = (event) => {
+    setMonth(event.target.value);
+  };
+
+  const handleYearChange = (event) => {
+    setYear(event.target.value);
+  };
+
+  const closeModal = () => {
+    document.getElementById("my_modal_1").close();
+  };
 
   return (
     <>
@@ -74,57 +88,116 @@ const EmployeeList = () => {
             </tr>
           </thead>
           <tbody>
-            {allEmployee.slice().reverse().map((employee, idx) => (
-              <tr key={employee._id} className="bg-base-200">
-                <th>{idx + 1}</th>
-                <td>{employee.name}</td>
-                <td>{employee.email}</td>
-                <td>
-                  {employee.verified ? (
-                    <button className="text-xl">✅</button>
-                  ) : (
-                    <button
-                      className="text-xl"
-                      onClick={() => setVerified(employee.email)}
-                    >
-                      ❎
-                    </button>
-                  )}
-                </td>
-                <th>{employee.bankAccount}</th>
-                <td>{employee.salary}</td>
-                <td>
-                  {employee.verified ? (
-                    <button
-                      className="btn bg-green-600"
-                      onClick={() => handlePay(employee.salary)}
-                    >
-                      Pay
-                    </button>
-                  ) : (
-                    <button
-                      className="btn bg-green-600"
-                      disabled
-                    >
-                      Pay
-                    </button>
-                  )}
-                </td>
-                <td>
-                  <Link to={`/dashboard/details/${employee._id}`}>
-                    <button className="btn btn-primary">Details</button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
+            {allEmployee
+              .slice()
+              .reverse()
+              .map((employee, idx) => (
+                <tr key={employee._id} className="bg-base-200">
+                  <th>{idx + 1}</th>
+                  <td>{employee.name}</td>
+                  <td>{employee.email}</td>
+                  <td>
+                    {employee.verified ? (
+                      <button className="text-xl">✅</button>
+                    ) : (
+                      <button
+                        className="text-xl"
+                        onClick={() => setVerified(employee.email)}
+                      >
+                        ❎
+                      </button>
+                    )}
+                  </td>
+                  <th>{employee.bankAccount}</th>
+                  <td>{employee.salary}</td>
+                  <td>
+                    {employee.verified ? (
+                      <button
+                        className="btn bg-green-600"
+                        onClick={() => handlePay(employee)}
+                      >
+                        Pay
+                      </button>
+                    ) : (
+                      <button className="btn bg-green-600" disabled>
+                        Pay
+                      </button>
+                    )}
+                  </td>
+                  <td>
+                    <Link to={`/dashboard/details/${employee._id}`}>
+                      <button className="btn btn-primary">Details</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
-          <Elements stripe={stripePromise}>
-            <CheckoutForm totalToPay={selectedEmployeeSalary} />
-          </Elements>
+      <div className="flex justify-between items-center">
+     
+          <h1 className="font-semibold text-xl my-2 text-green-700 ">
+            Total Payable Amount : ${" "}
+            {selectedEmployee && selectedEmployee.salary}
+          </h1>
+          <button
+            className="btn bg-red-500 text-white "
+            onClick={closeModal}
+          >
+           X
+          </button>
+      </div>
+          <label htmlFor="month">Month</label>
+          <select
+            id="month"
+            value={month}
+            onChange={handleMonthChange}
+            className="block w-full px-3 py-2 mb-4 border rounded-md"
+          >
+            <option value="" disabled>
+              Select month
+            </option>
+            {[
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ].map((month, index) => (
+              <option key={index} value={month}>
+                {month}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="year">Year</label>
+          <input
+            type="number"
+            id="year"
+            value={year}
+            onChange={handleYearChange}
+            className="block w-full px-3 py-2 mb-4 border rounded-md"
+            placeholder="YYYY"
+          />
+          {selectedEmployee && (
+            <Elements stripe={stripePromise}>
+              <CheckoutForm
+                totalToPay={selectedEmployee.salary}
+                selectedEmail={selectedEmployee.email}
+                month={month}
+                year={year}
+              />
+            </Elements>
+          )}
+    
         </div>
       </dialog>
     </>
