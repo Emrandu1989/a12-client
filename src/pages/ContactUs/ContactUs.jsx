@@ -17,7 +17,7 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://machine-world-server.vercel.app/message", {
+    fetch("http://localhost:3000/message", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {

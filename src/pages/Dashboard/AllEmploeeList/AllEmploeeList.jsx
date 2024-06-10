@@ -6,14 +6,15 @@ const AllEmployeeList = () => {
 
   useEffect(() => {
     fetchEmployees();
+    console.log("hello")
   }, []);
 
   const fetchEmployees = async () => {
+    console.log("hello")
     try {
-      const response = await fetch(
-        "https://machine-world-server.vercel.app/allEmployee"
-      );
+      const response = await fetch("http://localhost:3000/allEmployee");
       const data = await response.json();
+      console.log(data)
       setEmployees(data);
     } catch (error) {
       console.error("Error fetching employees:", error);
@@ -23,16 +24,13 @@ const AllEmployeeList = () => {
   const handleFire = async (email) => {
     try {
       // Update the user's role to "fired"
-      await fetch(
-        `https://machine-world-server.vercel.app/allEmployeeUp/${email}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, role: "fired" }),
-        }
-      );
+      await fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, role: "fired" }),
+      });
 
       fetchEmployees();
 
@@ -55,16 +53,13 @@ const AllEmployeeList = () => {
   const handlePromote = async (email) => {
     try {
       // Update the user's role to "HR"
-      await fetch(
-        `https://machine-world-server.vercel.app/allEmployeeUp/${email}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, role: "HR" }),
-        }
-      );
+      await fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, role: "HR" }),
+      });
 
       fetchEmployees();
 

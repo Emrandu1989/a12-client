@@ -13,7 +13,9 @@ const EHistory = () => {
     const fetchData = async () => {
       try {
         if (email) {
-          const response = await fetch(`https://machine-world-server.vercel.app/payments/${email}`);
+          const response = await fetch(
+            `http://localhost:3000/payments/${email}`
+          );
           const data = await response.json();
           setUserPayments(data);
         }

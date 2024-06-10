@@ -14,10 +14,10 @@ const Profile = () => {
       if (user?.email) {
         try {
           const response = await fetch(
-            `https://machine-world-server.vercel.app/allEmployees/${user?.email}`
+            `http://localhost:3000/allEmployees/${user?.email}`
           );
           const data = await response.json();
-          setProfileData(data);
+          setProfileData(data[0]);
         } catch (error) {
           console.error("Error fetching profile data:", error);
         }
@@ -46,16 +46,13 @@ const Profile = () => {
     if (image) {
       try {
         const imageUrl = await imageUpload(image);
-        await fetch(
-          `https://machine-world-server.vercel.app/updateProfile/${user?.email}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ image: imageUrl }),
-          }
-        );
+        await fetch(`http://localhost:3000/updateProfile/${user?.email}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ image: imageUrl }),
+        });
 
         setProfileData((prevProfileData) => ({
           ...prevProfileData,

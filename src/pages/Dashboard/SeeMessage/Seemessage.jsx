@@ -12,9 +12,7 @@ const Seemessage = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch(
-        "https://machine-world-server.vercel.app/message"
-      );
+      const response = await fetch("http://localhost:3000/message");
       const data = await response.json();
       setMessages(data);
     } catch (error) {
@@ -40,7 +38,7 @@ const Seemessage = () => {
 
   const deleteMessage = async (id) => {
     try {
-      await fetch(`https://machine-world-server.vercel.app/message/${id}`, {
+      await fetch(`http://localhost:3000/message/${id}`, {
         method: "DELETE",
       });
       // After deletion, fetch updated messages

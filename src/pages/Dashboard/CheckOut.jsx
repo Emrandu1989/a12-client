@@ -18,7 +18,7 @@ const CheckoutForm = ({ totalToPay, selectedEmail, month, year }) => {
   }/${today.getFullYear()}`;
   useEffect(() => {
     if (totalToPay > 0) {
-      fetch("https://machine-world-server.vercel.app/create-payment", {
+      fetch("http://localhost:3000/create-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +93,7 @@ const CheckoutForm = ({ totalToPay, selectedEmail, month, year }) => {
         year: year,
       };
 
-      fetch("https://machine-world-server.vercel.app/payments", {
+      fetch("http://localhost:3000/payments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

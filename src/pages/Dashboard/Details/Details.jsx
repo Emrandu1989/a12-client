@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import {
   Bar,
@@ -18,23 +18,16 @@ const Details = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://machine-world-server.vercel.app/payments/${data.email}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setPaymentData(data);
+    fetch(`http://localhost:3000/payments/${data?.email}`)
+      .then((res) => res.json())
+      .then((datas) => {
+        setPaymentData(datas);
         setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError(error.message);
+      })
+      .catch((err) => {
+        setError(err.message);
         setIsLoading(false);
-      }
-    };
-
-    fetchData();
+      });
   }, [data.email]);
 
   if (isLoading) {
@@ -64,7 +57,17 @@ const Details = () => {
   return (
     <>
       <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-10">
-        {/* Display user details */}
+        <div className="p-6">
+          <h2 className="text-2xl font-bold mb-2">Employee Details</h2>
+          <img src={data.image} alt={data.name} className="w-full h-48 object-cover rounded mb-4" />
+          <p><strong>Name:</strong> {data.name}</p>
+          <p><strong>Email:</strong> {data.email}</p>
+          <p><strong>Bank Account:</strong> {data.bankAccount}</p>
+          <p><strong>Salary:</strong> {data.salary}</p>
+          <p><strong>Role:</strong> {data.role}</p>
+          <p><strong>Designation:</strong> {data.designation}</p>
+        
+        </div>
       </div>
 
       <ResponsiveContainer width="100%" height={300} className="mt-10">
@@ -74,7 +77,7 @@ const Details = () => {
           <Tooltip />
           <Legend />
           <Bar dataKey="price">
-            {paymentData.map((entry, index) => (
+            {paymentData?.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getBarColor(entry.price)} />
             ))}
           </Bar>

@@ -8,7 +8,7 @@ const PaymentHistory = () => {
 
   useEffect(() => {
     // Fetch payment history data from the server
-    fetch("https://machine-world-server.vercel.app/payments")
+    fetch("http://localhost:3000/payments")
       .then((res) => res.json())
       .then((data) => {
         setPayments(data);

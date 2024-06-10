@@ -103,9 +103,10 @@ const router = createBrowserRouter([
       {
         path: "allEmploeeList",
         element: (
-          <HRRoute>
-            <AllEmployeeList />
-          </HRRoute>
+ <AdminRoute>
+   <AllEmployeeList />
+ </AdminRoute>
+         
         ),
       },
       {
@@ -116,9 +117,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://machine-world-server.vercel.app/allEmployee/${params.id}`
-          ),
+          fetch(`http://localhost:3000/allEmployee/${params.id}`),
       },
     ],
   },

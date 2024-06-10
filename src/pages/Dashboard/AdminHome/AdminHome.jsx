@@ -8,26 +8,35 @@ const AdminHome = () => {
   const email = user?.email || "";
   const [role, setRole] = useState("");
   const [worksheets, setWorksheets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
-    if (email) {
-      fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setRole(data?.role);
-        });
-    }
+    const fetchRole = async () => {
+      if (email) {
+        const res = await fetch(`http://localhost:3000/allEmployees/${email}`);
+        const data = await res.json();
+        setRole(data[0]?.role);
+        setIsLoading(false); // Set loading to false once role is fetched
+      }
+    };
+    fetchRole();
   }, [email]);
 
   useEffect(() => {
-    if (role === "HR") {
-      fetch(`https://machine-world-server.vercel.app/workSheet`)
-        .then((res) => res.json())
-        .then((data) => {
-          setWorksheets(data);
-        });
-    }
+    const fetchWorksheets = async () => {
+      if (role === "HR") {
+        const res = await fetch(`http://localhost:3000/workSheet`);
+        const data = await res.json();
+        setWorksheets(data);
+      }
+    };
+    fetchWorksheets();
   }, [role]);
+
+  // Render loading indicator when data is loading
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen  ">

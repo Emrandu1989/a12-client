@@ -13,7 +13,7 @@ const EmployeeList = () => {
   const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
   const fetchSheet = () => {
-    fetch("https://machine-world-server.vercel.app/allEmployee")
+    fetch("http://localhost:3000/allEmployee")
       .then((res) => res.json())
       .then((data) => {
         setAllEmployee(data);
@@ -21,7 +21,7 @@ const EmployeeList = () => {
   };
 
   const setVerified = (email) => {
-    fetch(`https://machine-world-server.vercel.app/verifyEmployee/${email}`, {
+    fetch(`http://localhost:3000/verifyEmployee/${email}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

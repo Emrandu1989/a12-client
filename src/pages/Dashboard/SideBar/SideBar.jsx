@@ -12,9 +12,10 @@ const SideBar = () => {
     const fetchUserRole = async () => {
       try {
         if (email) {
-          const response = await fetch(`https://machine-world-server.vercel.app/allEmployees/${email}`);
+          const response = await fetch(`http://localhost:3000/allEmployees/${email}`);
           const data = await response.json();
-          setRole(data?.role);
+          setRole(data[0]?.role);
+          console.log(data)
         }
       } catch (error) {
         console.error("Error fetching user role:", error);
@@ -24,6 +25,8 @@ const SideBar = () => {
 
     fetchUserRole();
   }, [email]);
+
+  console.log(role)
 
   return (
     <div>

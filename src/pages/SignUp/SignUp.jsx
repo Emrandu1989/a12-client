@@ -49,25 +49,22 @@ const Signup = () => {
       await createUser(email, password);
       await updateUserProfile(name, imageUrl);
 
-      const response = await fetch(
-        `https://machine-world-server.vercel.app/users`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: name,
-            email: email,
-            bankAccount: bankAccount,
-            salary: salary,
-            image: imageUrl,
-            role: role,
-            designation: designation,
-            veryfyed: false,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3000/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          bankAccount: bankAccount,
+          salary: salary,
+          image: imageUrl,
+          role: role,
+          designation: designation,
+          veryfyed: false,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to create user");

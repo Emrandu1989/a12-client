@@ -11,7 +11,7 @@ const Services = () => {
   //        })
 
   useEffect(() => {
-    fetch("https://machine-world-server.vercel.app/services")
+    fetch("http://localhost:3000/services")
       .then((response) => response.json())
       .then((json) => setServices(json));
   }, []);
