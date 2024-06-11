@@ -64,15 +64,13 @@ const Seemessage = () => {
 
   const renderMessageContent = (message) => {
     const maxLength = 100;
-    const content =
-      message.length > maxLength
-        ? message.slice(0, maxLength) + "..."
-        : message;
     const isExpanded = expandedMessageIds.includes(message._id);
+    const content = isExpanded ? message.message : `${message.message.slice(0, maxLength)}...`;
+    
     return (
       <div>
-        <p>{isExpanded ? message : content}</p>
-        {message.length > maxLength && (
+        <p>{content}</p>
+        {message.message.length > maxLength && (
           <button
             onClick={() => toggleExpandMessage(message._id)}
             className="text-blue-500 underline cursor-pointer"
@@ -100,7 +98,7 @@ const Seemessage = () => {
             <tr key={message._id}>
               <td className="border px-4 py-2">{message.email}</td>
               <td className="border px-4 py-2">
-                {renderMessageContent(message.message)}
+                {renderMessageContent(message)}
               </td>
               <td className="border px-4 py-2 text-center">
                 <button

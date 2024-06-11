@@ -39,16 +39,16 @@ const EHistory = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div>
+    <div className="container mx-auto p-6">
       <motion.div
-        className="mx-auto p-6 bg-white shadow-md rounded-lg"
+        className="p-6 bg-white shadow-md rounded-lg"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-2xl font-semibold mb-4">Payment History</h2>
         <div className="overflow-x-auto">
-          {userPayments?.length > 0 ? (
+          {userPayments.length > 0 ? (
             <>
               <table className="w-full table-auto">
                 <thead>
@@ -70,8 +70,8 @@ const EHistory = () => {
                       transition={{ duration: 0.5, delay: 0.1 }}
                     >
                       <td className="py-3 px-6">{payment.transactionId}</td>
-                      <td className="py-3 px-6">{payment?.month}</td>
-                      <td className="py-3 px-6">{payment?.year}</td>
+                      <td className="py-3 px-6">{payment.month}</td>
+                      <td className="py-3 px-6">{payment.year}</td>
                       <td className="py-3 px-6">{payment.SubmitDate}</td>
                       <td className="py-3 px-6">$ {payment.price}</td>
                     </motion.tr>
@@ -86,33 +86,23 @@ const EHistory = () => {
                 >
                   Previous
                 </button>
-                {[
-                  ...Array(
-                    Math.ceil(userPayments?.length / itemsPerPage)
-                  ).keys(),
-                ].map((page) => (
-                  <button
-                    key={page + 1}
-                    className={`btn mx-1 ${
-                      currentPage === page + 1 ? "btn-active" : ""
-                    }`}
-                    onClick={() => paginate(page + 1)}
-                  >
-                    {page + 1}
-                  </button>
-                ))}
+                {[...Array(Math.ceil(userPayments.length / itemsPerPage)).keys()].map(
+                  (page) => (
+                    <button
+                      key={page + 1}
+                      className={`btn mx-1 ${currentPage === page + 1 ? "btn-active" : ""}`}
+                      onClick={() => paginate(page + 1)}
+                    >
+                      {page + 1}
+                    </button>
+                  )
+                )}
                 <button
                   className={`btn ${
-                    currentPage ===
-                    Math.ceil(userPayments?.length / itemsPerPage)
-                      ? "btn-disabled"
-                      : ""
+                    currentPage === Math.ceil(userPayments.length / itemsPerPage) ? "btn-disabled" : ""
                   }`}
                   onClick={() => paginate(currentPage + 1)}
-                  disabled={
-                    currentPage ===
-                    Math.ceil(userPayments?.length / itemsPerPage)
-                  }
+                  disabled={currentPage === Math.ceil(userPayments.length / itemsPerPage)}
                 >
                   Next
                 </button>

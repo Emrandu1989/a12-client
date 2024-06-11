@@ -8,15 +8,21 @@ const AdminHome = () => {
   const email = user?.email || "";
   const [role, setRole] = useState("");
   const [worksheets, setWorksheets] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchRole = async () => {
       if (email) {
-        const res = await fetch(`http://localhost:3000/allEmployees/${email}`);
-        const data = await res.json();
-        setRole(data[0]?.role);
-        setIsLoading(false); // Set loading to false once role is fetched
+        try {
+          const res = await fetch(`http://localhost:3000/allEmployees/${email}`);
+          const data = await res.json();
+          setRole(data[0]?.role);
+          setIsLoading(false);
+        } catch (err) {
+          setError("Failed to fetch role data");
+          setIsLoading(false);
+        }
       }
     };
     fetchRole();
@@ -25,9 +31,13 @@ const AdminHome = () => {
   useEffect(() => {
     const fetchWorksheets = async () => {
       if (role === "HR") {
-        const res = await fetch(`http://localhost:3000/workSheet`);
-        const data = await res.json();
-        setWorksheets(data);
+        try {
+          const res = await fetch(`http://localhost:3000/workSheet`);
+          const data = await res.json();
+          setWorksheets(data);
+        } catch (err) {
+          setError("Failed to fetch worksheets");
+        }
       }
     };
     fetchWorksheets();
@@ -38,8 +48,12 @@ const AdminHome = () => {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <div className="min-h-screen  ">
+    <div className="min-h-screen">
       {role === "HR" && (
         <>
           <Box />
@@ -51,23 +65,14 @@ const AdminHome = () => {
               <table className="min-w-full bg-white bg-opacity-20 rounded-lg">
                 <thead>
                   <tr className="text-left">
-                    <th className="py-3 px-6 bg-gradient-to-r from-purple-600 to-blue-600">
-                      Work Name
-                    </th>
-                    <th className="py-3 px-6 bg-gradient-to-r from-purple-600 to-blue-600">
-                      Work Submit
-                    </th>
-                    <th className="py-3 px-6 bg-gradient-to-r from-purple-600 to-blue-600">
-                      Working Hours
-                    </th>
+                    <th className="py-3 px-6 bg-gradient-to-r from-purple-600 to-blue-600">Work Name</th>
+                    <th className="py-3 px-6 bg-gradient-to-r from-purple-600 to-blue-600">Work Submit</th>
+                    <th className="py-3 px-6 bg-gradient-to-r from-purple-600 to-blue-600">Working Hours</th>
                   </tr>
                 </thead>
                 <tbody>
                   {worksheets.map((worksheet) => (
-                    <tr
-                      key={worksheet._id}
-                      className="border-b text-black border-gray-200"
-                    >
+                    <tr key={worksheet._id} className="border-b text-black border-gray-200">
                       <td className="py-4 px-6">{worksheet.choice}</td>
                       <td className="py-4 px-6">{worksheet.date}</td>
                       <td className="py-4 px-6">{worksheet.hours}</td>
@@ -81,13 +86,13 @@ const AdminHome = () => {
       )}
       {role === "Employee" && (
         <>
-          <Box></Box>
+          <Box />
           <Profile />
         </>
       )}
       {role === "admin" && (
         <>
-          <Box></Box>
+          <Box />
           <Profile />
         </>
       )}

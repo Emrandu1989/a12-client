@@ -7,26 +7,23 @@ const PaymentHistory = () => {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    // Fetch payment history data from the server
-    fetch("http://localhost:3000/payments")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchPayments = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/payments");
+        const data = await response.json();
         setPayments(data);
-      })
-      .catch((error) =>
-        console.error("Error fetching payment history:", error)
-      );
+      } catch (error) {
+        console.error("Error fetching payment history:", error);
+      }
+    };
+
+    fetchPayments();
   }, []);
 
-  // Get current payments
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPayments = payments
-    .slice()
-    .reverse()
-    .slice(indexOfFirstItem, indexOfLastItem);
+  const currentPayments = payments.slice().reverse().slice(indexOfFirstItem, indexOfLastItem);
 
-  // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -50,7 +47,7 @@ const PaymentHistory = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
-            {currentPayments?.map((payment) => (
+            {currentPayments.map((payment) => (
               <motion.tr
                 key={payment._id}
                 className="border-b border-gray-200 hover:bg-gray-100"
@@ -77,27 +74,19 @@ const PaymentHistory = () => {
         >
           Previous
         </button>
-        {[...Array(Math.ceil(payments?.length / itemsPerPage)).keys()].map(
-          (page) => (
-            <button
-              key={page + 1}
-              className={`btn mx-1 ${
-                currentPage === page + 1 ? "btn-active" : ""
-              }`}
-              onClick={() => paginate(page + 1)}
-            >
-              {page + 1}
-            </button>
-          )
-        )}
+        {[...Array(Math.ceil(payments.length / itemsPerPage)).keys()].map((page) => (
+          <button
+            key={page + 1}
+            className={`btn mx-1 ${currentPage === page + 1 ? "btn-active" : ""}`}
+            onClick={() => paginate(page + 1)}
+          >
+            {page + 1}
+          </button>
+        ))}
         <button
-          className={`btn ${
-            currentPage === Math.ceil(payments?.length / itemsPerPage)
-              ? "btn-disabled"
-              : ""
-          }`}
+          className={`btn ${currentPage === Math.ceil(payments.length / itemsPerPage) ? "btn-disabled" : ""}`}
           onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(payments?.length / itemsPerPage)}
+          disabled={currentPage === Math.ceil(payments.length / itemsPerPage)}
         >
           Next
         </button>

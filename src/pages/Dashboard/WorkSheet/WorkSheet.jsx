@@ -7,11 +7,14 @@ const WorkSheet = () => {
   const { user } = useAuth();
   const [workSheet, setWorkSheet] = useState([]);
   const [userEmail, setUserEmail] = useState(user?.email || "");
+  const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/allEmployees/${user.email}`);
+        const response = await fetch(
+          `http://localhost:3000/allEmployees/${user.email}`
+        );
         const data = await response.json();
         setUserEmail(data[0]?.email || "");
       } catch (error) {
@@ -53,6 +56,21 @@ const WorkSheet = () => {
     const date = form.date.value;
     const name = user.displayName;
     const email = user.email;
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const monthName = monthNames[selectedMonth - 1];  
 
     if (!choice || !hours || !date) {
       Swal.fire({
@@ -63,7 +81,7 @@ const WorkSheet = () => {
       return;
     }
 
-    const workData = { choice, hours, date, name, email };
+    const workData = { choice, hours, date, name, email, month: monthName }; // Include month name in workData
 
     try {
       const response = await fetch("http://localhost:3000/workSheet", {
@@ -95,10 +113,29 @@ const WorkSheet = () => {
     <>
       <form
         onSubmit={handleWorkSheetData}
-        className="bg-green-600 mb-12 py-9 px-12 rounded-lg"
+        className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white mb-12 py-9 px-12 rounded-lg"
       >
         <div className="space-x-9">
-          <select className="p-1 rounded-lg" name="choice" id="">
+          <select
+            className="p-1 rounded-lg bg-white text-black"
+            onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+            value={selectedMonth}
+          >
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+
+          <select className="p-1 rounded-lg bg-white text-black" name="choice" id="">
             <option value="">Choose Work</option>
             <option value="sales">Sales</option>
             <option value="support">Support</option>
@@ -107,14 +144,14 @@ const WorkSheet = () => {
           </select>
           <input
             name="hours"
-            className="p-1 rounded-lg"
+            className="p-1 rounded-lg bg-white text-black"
             type="number"
             placeholder="Hours"
             min="1"
             required
           />
           <input
-            className="p-1 rounded-lg"
+            className="p-1 rounded-lg bg-white text-black"
             defaultValue={`${date.getFullYear()}-${(date.getMonth() + 1)
               .toString()
               .padStart(2, "0")}-01`}
@@ -143,7 +180,7 @@ const WorkSheet = () => {
               .slice()
               .reverse()
               .map((workData, index) => (
-                <tr key={workData._id} className="bg-base-200">
+                <tr key={workData._id} className="bg-purple-100">
                   <th>{index + 1}</th>
                   <td>{workData.choice}</td>
                   <td>{workData.hours} Hours</td>

@@ -69,6 +69,14 @@ const SideBar = () => {
                 <li>
                   <Link
                     className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
+                    to="progress\"
+                  >
+                   Progress
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
                     to="payment-history"
                   >
                     Payment History
@@ -86,6 +94,7 @@ const SideBar = () => {
                     Work Sheet
                   </Link>
                 </li>
+                
                 <li>
                   <Link
                     className="block py-2 px-4 rounded text-black bg-white hover:bg-white transition-colors"
