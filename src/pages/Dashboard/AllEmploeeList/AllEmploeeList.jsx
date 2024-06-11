@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 const AllEmployeeList = () => {
   const [employees, setEmployees] = useState([]);
   const [viewMode, setViewMode] = useState("table");
+  const [salaryInputs, setSalaryInputs] = useState({});
 
   useEffect(() => {
     fetchEmployees();
@@ -75,6 +76,44 @@ const AllEmployeeList = () => {
     }
   };
 
+  const handleSalaryChange = (email, newSalary) => {
+    setSalaryInputs((prevInputs) => ({
+      ...prevInputs,
+      [email]: newSalary,
+    }));
+  };
+
+  const handleSalaryUpdate = async (email) => {
+    const newSalary = salaryInputs[email];
+    if (newSalary == null) return;
+
+    try {
+      await fetch(`http://localhost:3000/allEmployeeUpS/${email}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ salary: newSalary }),
+      });
+
+      fetchEmployees();
+
+      Swal.fire(
+        "Done!",
+        `Employee with email ${email}'s salary has been updated.`,
+        "success"
+      );
+    } catch (error) {
+      console.error("Error updating salary:", error);
+
+      Swal.fire(
+        "Error!",
+        "An error occurred while updating the salary.",
+        "error"
+      );
+    }
+  };
+
   const confirmAction = (employee, action) => {
     const actionText = action === "fire" ? "fire" : "promote";
     const actionFunc = action === "fire" ? handleFire : handlePromote;
@@ -114,6 +153,8 @@ const AllEmployeeList = () => {
             <tr>
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">Designation</th>
+              <th className="py-2 px-4 border-b">Salary</th>
+              <th className="py-2 px-4 border-b">Update Salary</th>
               <th className="py-2 px-4 border-b">Make HR</th>
               <th className="py-2 px-4 border-b">Fire</th>
             </tr>
@@ -123,6 +164,28 @@ const AllEmployeeList = () => {
               <tr key={employee.email}>
                 <td className="py-2 px-4 border-b">{employee.name}</td>
                 <td className="py-2 px-4 border-b">{employee.designation}</td>
+                <td className="py-2 px-4 border-b">
+                  <input
+                    type="number"
+                    value={salaryInputs[employee.email] ?? employee.salary}
+                    onChange={(e) =>
+                      handleSalaryChange(employee.email, e.target.value)
+                    }
+                    className="w-full p-1 border"
+                  />
+                </td>
+                <td className="py-2 px-4 border-b text-center">
+                  <button
+                    className="bg-blue-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleSalaryUpdate(employee.email)}
+                    disabled={
+                      salaryInputs[employee.email] == null ||
+                      salaryInputs[employee.email] === employee.salary
+                    }
+                  >
+                    Update
+                  </button>
+                </td>
                 <td className="py-2 px-4 border-b text-center">
                   {employee.role === "Employee" && (
                     <button
@@ -166,10 +229,31 @@ const AllEmployeeList = () => {
               <h2 className="text-xl font-bold mb-2">{employee.name}</h2>
               <p className="mb-2">Designation: {employee.designation}</p>
               <p className="mb-2">Role: {employee.role}</p>
-              <div className="flex justify-between">
+              <p className="mb-2">
+                Salary:{" "}
+                <input
+                  type="number"
+                  value={salaryInputs[employee.email] ?? employee.salary}
+                  onChange={(e) =>
+                    handleSalaryChange(employee.email, e.target.value)
+                  }
+                  className="w-full p-1 border"
+                />
+              </p>
+              <button
+                className="bg-blue-500 text-white px-2 py-1 rounded w-full mb-2"
+                onClick={() => handleSalaryUpdate(employee.email)}
+                disabled={
+                  salaryInputs[employee.email] == null ||
+                  salaryInputs[employee.email] === employee.salary
+                }
+              >
+                Update Salary
+              </button>
+              <div className="flex justify-between gap-2">
                 {employee.role === "Employee" && (
                   <button
-                    className="bg-green-500 text-white px-2 py-1 rounded"
+                    className="bg-green-500 w-full text-white px-2 py-1 rounded"
                     onClick={() => confirmAction(employee, "promote")}
                   >
                     Promote to HR
@@ -177,7 +261,7 @@ const AllEmployeeList = () => {
                 )}
                 {employee.role !== "fired" ? (
                   <button
-                    className={`bg-red-500 text-white px-2 py-1 rounded ${
+                    className={`bg-red-500 w-full text-white px-2 py-1 rounded ${
                       employee.role === "admin" ? "disabled:opacity-50" : ""
                     }`}
                     onClick={() =>
