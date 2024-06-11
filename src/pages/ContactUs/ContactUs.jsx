@@ -50,7 +50,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center min-h-screen bg-green-100 md:p-20 gap-10">
+    <div className="flex flex-col p-10 md:flex-row justify-center items-center min-h-screen bg-green-100 md:p-20 gap-10">
       <div className="w-full md:w-1/2 flex justify-center items-center mb-8 md:mb-0">
         <div className="bg-white p-8 rounded-lg shadow-md w-full transform transition-all duration-500 hover:shadow-lg hover:scale-105">
           <form onSubmit={handleSubmit}>
