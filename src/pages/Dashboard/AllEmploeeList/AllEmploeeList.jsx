@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 
 const AllEmployeeList = () => {
   const [employees, setEmployees] = useState([]);
+  const [viewMode, setViewMode] = useState("table");
 
   useEffect(() => {
     fetchEmployees();
@@ -92,24 +93,80 @@ const AllEmployeeList = () => {
     });
   };
 
+  const toggleViewMode = () => {
+    setViewMode((prevMode) => (prevMode === "table" ? "card" : "table"));
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Employee List</h1>
-      <table className="min-w-full bg-white border border-gray-200">
-        <thead>
-          <tr>
-            <th className="py-2 px-4 border-b">Name</th>
-            <th className="py-2 px-4 border-b">Designation</th>
-            <th className="py-2 px-4 border-b">Make HR</th>
-            <th className="py-2 px-4 border-b">Fire</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Employee List</h1>
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={toggleViewMode}
+        >
+          Toggle View
+        </button>
+      </div>
+      {viewMode === "table" ? (
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b">Name</th>
+              <th className="py-2 px-4 border-b">Designation</th>
+              <th className="py-2 px-4 border-b">Make HR</th>
+              <th className="py-2 px-4 border-b">Fire</th>
+            </tr>
+          </thead>
+          <tbody>
+            {employees.map((employee) => (
+              <tr key={employee.email}>
+                <td className="py-2 px-4 border-b">{employee.name}</td>
+                <td className="py-2 px-4 border-b">{employee.designation}</td>
+                <td className="py-2 px-4 border-b text-center">
+                  {employee.role === "Employee" && (
+                    <button
+                      className="bg-green-500 text-white px-2 py-1 rounded"
+                      onClick={() => confirmAction(employee, "promote")}
+                    >
+                      Promote to HR
+                    </button>
+                  )}
+                </td>
+                <td className="py-2 px-4 border-b text-center">
+                  {employee.role !== "fired" ? (
+                    <button
+                      className={`bg-red-500 text-white px-2 py-1 rounded ${
+                        employee.role === "admin" ? "disabled:opacity-50" : ""
+                      }`}
+                      onClick={() =>
+                        employee.role !== "admin"
+                          ? confirmAction(employee, "fire")
+                          : null
+                      }
+                      disabled={employee.role === "admin"}
+                    >
+                      Fire
+                    </button>
+                  ) : (
+                    "Fired"
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {employees.map((employee) => (
-            <tr key={employee.email}>
-              <td className="py-2 px-4 border-b">{employee.name}</td>
-              <td className="py-2 px-4 border-b">{employee.designation}</td>
-              <td className="py-2 px-4 border-b text-center">
+            <div
+              key={employee.email}
+              className="bg-white p-4 rounded-lg shadow-md border border-gray-200"
+            >
+              <h2 className="text-xl font-bold mb-2">{employee.name}</h2>
+              <p className="mb-2">Designation: {employee.designation}</p>
+              <p className="mb-2">Role: {employee.role}</p>
+              <div className="flex justify-between">
                 {employee.role === "Employee" && (
                   <button
                     className="bg-green-500 text-white px-2 py-1 rounded"
@@ -118,8 +175,6 @@ const AllEmployeeList = () => {
                     Promote to HR
                   </button>
                 )}
-              </td>
-              <td className="py-2 px-4 border-b text-center">
                 {employee.role !== "fired" ? (
                   <button
                     className={`bg-red-500 text-white px-2 py-1 rounded ${
@@ -137,11 +192,11 @@ const AllEmployeeList = () => {
                 ) : (
                   "Fired"
                 )}
-              </td>
-            </tr>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      )}
     </div>
   );
 };
