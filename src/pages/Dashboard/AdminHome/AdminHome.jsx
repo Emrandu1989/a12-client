@@ -38,7 +38,7 @@ const AdminHome = () => {
       }
     };
     fetchWorksheets();
-  }, [role[0]]);
+  }, [role]);
 
   // Render loading indicator when data is loading
   if (isLoading) {
