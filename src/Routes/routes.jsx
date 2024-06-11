@@ -8,6 +8,7 @@ import Details from "../pages/Dashboard/Details/Details";
 import EmployeeList from "../pages/Dashboard/EmployeeList/EmployeeList";
 import EHostory from "../pages/Dashboard/EmployeePayHis/Hostory";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import Progress from "../pages/Dashboard/Progress/Progress";
 import Seemessage from "../pages/Dashboard/SeeMessage/Seemessage";
 import WorkSheet from "../pages/Dashboard/WorkSheet/WorkSheet";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
@@ -18,7 +19,6 @@ import AdminRoute from "./AdminRoute";
 import EmployeeRoute from "./EmployeeRoute";
 import HRRoute from "./HRRoute";
 import PrivateRoute from "./PrivateRoute";
-import Progress from "../pages/Dashboard/Progress/Progress";
 
 const router = createBrowserRouter([
   {
@@ -125,7 +125,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/allEmployee/${params.id}`),
+          fetch(
+            `https://machine-world-server.vercel.app/allEmployee/${params.id}`
+          ),
       },
     ],
   },

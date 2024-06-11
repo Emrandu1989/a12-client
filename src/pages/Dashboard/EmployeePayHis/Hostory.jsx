@@ -11,16 +11,12 @@ const EHistory = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        if (email) {
-          const response = await fetch(
-            `http://localhost:3000/payments/${email}`
-          );
-          const data = await response.json();
-          setUserPayments(data);
-        }
-      } catch (error) {
-        console.error("Error fetching payment history:", error);
+      if (email) {
+        const response = await fetch(
+          `https://machine-world-server.vercel.app/payments/${email}`
+        );
+        const data = await response.json();
+        setUserPayments(data);
       }
     };
 
@@ -86,23 +82,33 @@ const EHistory = () => {
                 >
                   Previous
                 </button>
-                {[...Array(Math.ceil(userPayments.length / itemsPerPage)).keys()].map(
-                  (page) => (
-                    <button
-                      key={page + 1}
-                      className={`btn mx-1 ${currentPage === page + 1 ? "btn-active" : ""}`}
-                      onClick={() => paginate(page + 1)}
-                    >
-                      {page + 1}
-                    </button>
-                  )
-                )}
+                {[
+                  ...Array(
+                    Math.ceil(userPayments.length / itemsPerPage)
+                  ).keys(),
+                ].map((page) => (
+                  <button
+                    key={page + 1}
+                    className={`btn mx-1 ${
+                      currentPage === page + 1 ? "btn-active" : ""
+                    }`}
+                    onClick={() => paginate(page + 1)}
+                  >
+                    {page + 1}
+                  </button>
+                ))}
                 <button
                   className={`btn ${
-                    currentPage === Math.ceil(userPayments.length / itemsPerPage) ? "btn-disabled" : ""
+                    currentPage ===
+                    Math.ceil(userPayments.length / itemsPerPage)
+                      ? "btn-disabled"
+                      : ""
                   }`}
                   onClick={() => paginate(currentPage + 1)}
-                  disabled={currentPage === Math.ceil(userPayments.length / itemsPerPage)}
+                  disabled={
+                    currentPage ===
+                    Math.ceil(userPayments.length / itemsPerPage)
+                  }
                 >
                   Next
                 </button>

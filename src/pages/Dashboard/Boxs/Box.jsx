@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaClock,
   FaCog,
@@ -10,7 +10,7 @@ import {
   FaUserTag,
   FaUsers,
 } from "react-icons/fa";
-import Swal from "sweetalert2";
+
 import useAuth from "../../../hooks/useAuth";
 
 const Box = () => {
@@ -24,28 +24,29 @@ const Box = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const usersResponse = await fetch(`http://localhost:3000/allEmployee`);
-        const usersData = await usersResponse.json();
-        setUsers(usersData);
+      const usersResponse = await fetch(
+        `https://machine-world-server.vercel.app/allEmployee`
+      );
+      const usersData = await usersResponse.json();
+      setUsers(usersData);
 
-        const servicesResponse = await fetch(`http://localhost:3000/services`);
-        const servicesData = await servicesResponse.json();
-        setServices(servicesData);
+      const servicesResponse = await fetch(
+        `https://machine-world-server.vercel.app/services`
+      );
+      const servicesData = await servicesResponse.json();
+      setServices(servicesData);
 
-        const worksheetsResponse = await fetch(
-          `http://localhost:3000/workSheet`
-        );
-        const worksheetsData = await worksheetsResponse.json();
-        setWorksheets(worksheetsData);
+      const worksheetsResponse = await fetch(
+        `https://machine-world-server.vercel.app/workSheet`
+      );
+      const worksheetsData = await worksheetsResponse.json();
+      setWorksheets(worksheetsData);
 
-        const messagesResponse = await fetch(`http://localhost:3000/message`);
-        const messagesData = await messagesResponse.json();
-        setMessages(messagesData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        Swal.fire("Error!", "An error occurred while fetching data.", "error");
-      }
+      const messagesResponse = await fetch(
+        `https://machine-world-server.vercel.app/message`
+      );
+      const messagesData = await messagesResponse.json();
+      setMessages(messagesData);
     };
 
     fetchData();
@@ -54,20 +55,11 @@ const Box = () => {
   useEffect(() => {
     const fetchUserRole = async () => {
       if (email) {
-        try {
-          const response = await fetch(
-            `http://localhost:3000/allEmployees/${email}`
-          );
-          const data = await response.json();
-          setRole(data[0]?.role);
-        } catch (error) {
-          console.error("Error fetching user role:", error);
-          Swal.fire(
-            "Error!",
-            "An error occurred while fetching user role.",
-            "error"
-          );
-        }
+        const response = await fetch(
+          `https://machine-world-server.vercel.app/allEmployees/${email}`
+        );
+        const data = await response.json();
+        setRole(data[0]?.role);
       }
     };
 

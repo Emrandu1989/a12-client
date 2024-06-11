@@ -11,13 +11,11 @@ const Seemessage = () => {
   }, []);
 
   const fetchMessages = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/message");
-      const data = await response.json();
-      setMessages(data);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-    }
+    const response = await fetch(
+      "https://machine-world-server.vercel.app/message"
+    );
+    const data = await response.json();
+    setMessages(data);
   };
 
   const handleDelete = (id) => {
@@ -37,21 +35,12 @@ const Seemessage = () => {
   };
 
   const deleteMessage = async (id) => {
-    try {
-      await fetch(`http://localhost:3000/message/${id}`, {
-        method: "DELETE",
-      });
-      // After deletion, fetch updated messages
-      fetchMessages();
-      Swal.fire("Deleted!", "Your message has been deleted.", "success");
-    } catch (error) {
-      console.error("Error deleting message:", error);
-      Swal.fire(
-        "Error!",
-        "An error occurred while deleting the message.",
-        "error"
-      );
-    }
+    await fetch(`https://machine-world-server.vercel.app/message/${id}`, {
+      method: "DELETE",
+    });
+    // After deletion, fetch updated messages
+    fetchMessages();
+    Swal.fire("Deleted!", "Your message has been deleted.", "success");
   };
 
   const toggleExpandMessage = (id) => {
@@ -65,8 +54,10 @@ const Seemessage = () => {
   const renderMessageContent = (message) => {
     const maxLength = 100;
     const isExpanded = expandedMessageIds.includes(message._id);
-    const content = isExpanded ? message.message : `${message.message.slice(0, maxLength)}...`;
-    
+    const content = isExpanded
+      ? message.message
+      : `${message.message.slice(0, maxLength)}...`;
+
     return (
       <div>
         <p>{content}</p>

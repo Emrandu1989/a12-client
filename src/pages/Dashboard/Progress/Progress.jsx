@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 
 const Progress = () => {
   const [worksheets, setWorksheets] = useState([]);
@@ -25,15 +25,12 @@ const Progress = () => {
 
   useEffect(() => {
     const fetchWorksheets = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/workSheet");
-        const data = await response.json();
-        setWorksheets(data);
-        setIsLoading(false);
-      } catch (error) {
-        setError("Error fetching worksheets: " + error.message);
-        setIsLoading(false);
-      }
+      const response = await fetch(
+        "https://machine-world-server.vercel.app/workSheet"
+      );
+      const data = await response.json();
+      setWorksheets(data);
+      setIsLoading(false);
     };
 
     fetchWorksheets();
@@ -41,14 +38,12 @@ const Progress = () => {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/allEmployee");
-        const data = await response.json();
-        const employeeNames = data.map((employee) => employee.name);
-        setEmployees(employeeNames);
-      } catch (error) {
-        setError("Error fetching employees: " + error.message);
-      }
+      const response = await fetch(
+        "https://machine-world-server.vercel.app/allEmployee"
+      );
+      const data = await response.json();
+      const employeeNames = data.map((employee) => employee.name);
+      setEmployees(employeeNames);
     };
 
     fetchEmployees();

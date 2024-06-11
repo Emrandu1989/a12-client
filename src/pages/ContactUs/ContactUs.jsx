@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 const ContactUs = () => {
@@ -17,30 +17,26 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/message", {
+    fetch("https://machine-world-server.vercel.app/message", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((response) => {
-        if (response.ok) {
-          Swal.fire({
-            icon: "success",
-            title: "Success!",
-            text: "Your message has been sent successfully.",
-            confirmButtonText: "OK",
-          });
-          console.log("Form submitted successfully!");
-        } else {
-          // Handle error, e.g., show an error message
-          console.error("Form submission failed:", response.statusText);
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-      });
+    }).then((response) => {
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Your message has been sent successfully.",
+          confirmButtonText: "OK",
+        });
+        console.log("Form submitted successfully!");
+      } else {
+        // Handle error, e.g., show an error message
+        console.error("Form submission failed:", response.statusText);
+      }
+    });
 
     // Reset form fields
     setFormData({

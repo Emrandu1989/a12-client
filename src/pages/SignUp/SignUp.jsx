@@ -20,36 +20,28 @@ const Signup = () => {
   const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
 
   const handelGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-      Swal.fire({
-        title: "Signup Successful",
-        text: "You have successfully signed up.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-      setTimeout(() => {
-        navigate("/");
-      }, 4000);
-    } catch (err) {
-      Swal.fire({
-        title: "Signup Failed",
-        text: err.message,
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    }
+    await signInWithGoogle();
+    Swal.fire({
+      title: "Signup Successful",
+      text: "You have successfully signed up.",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+    setTimeout(() => {
+      navigate("/");
+    }, 4000);
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    try {
-      const imageUrl = await imageUpload(image);
-      await createUser(email, password);
-      await updateUserProfile(name, imageUrl);
+    const imageUrl = await imageUpload(image);
+    await createUser(email, password);
+    await updateUserProfile(name, imageUrl);
 
-      const response = await fetch(`http://localhost:3000/users`, {
+    const response = await fetch(
+      `https://machine-world-server.vercel.app/users`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,27 +56,20 @@ const Signup = () => {
           designation: designation,
           veryfyed: false,
         }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create user");
       }
+    );
 
-      Swal.fire({
-        title: "Signup Successful",
-        text: "You have successfully signed up.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-      navigate("/");
-    } catch (err) {
-      Swal.fire({
-        title: "Signup Failed",
-        text: err.message,
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+    if (!response.ok) {
+      throw new Error("Failed to create user");
     }
+
+    Swal.fire({
+      title: "Signup Successful",
+      text: "You have successfully signed up.",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+    navigate("/");
   };
 
   const togglePasswordVisibility = () => {

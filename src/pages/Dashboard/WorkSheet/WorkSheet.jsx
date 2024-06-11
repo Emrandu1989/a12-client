@@ -11,25 +11,19 @@ const WorkSheet = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/allEmployees/${user.email}`
-        );
-        const data = await response.json();
-        setUserEmail(data[0]?.email || "");
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
+      const response = await fetch(
+        `https://machine-world-server.vercel.app/allEmployees/${user.email}`
+      );
+      const data = await response.json();
+      setUserEmail(data[0]?.email || "");
     };
 
     const fetchSheetData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/workSheet");
-        const data = await response.json();
-        setWorkSheet(data);
-      } catch (error) {
-        console.error("Error fetching worksheet data:", error);
-      }
+      const response = await fetch(
+        "https://machine-world-server.vercel.app/workSheet"
+      );
+      const data = await response.json();
+      setWorkSheet(data);
     };
 
     if (user?.email) {
@@ -39,13 +33,11 @@ const WorkSheet = () => {
   }, [user]);
 
   const fetchSheetData = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/workSheet");
-      const data = await response.json();
-      setWorkSheet(data);
-    } catch (error) {
-      console.error("Error fetching worksheet data:", error);
-    }
+    const response = await fetch(
+      "https://machine-world-server.vercel.app/workSheet"
+    );
+    const data = await response.json();
+    setWorkSheet(data);
   };
 
   const handleWorkSheetData = async (e) => {
@@ -70,7 +62,7 @@ const WorkSheet = () => {
       "November",
       "December",
     ];
-    const monthName = monthNames[selectedMonth - 1];  
+    const monthName = monthNames[selectedMonth - 1];
 
     if (!choice || !hours || !date) {
       Swal.fire({
@@ -83,30 +75,24 @@ const WorkSheet = () => {
 
     const workData = { choice, hours, date, name, email, month: monthName }; // Include month name in workData
 
-    try {
-      const response = await fetch("http://localhost:3000/workSheet", {
+    const response = await fetch(
+      "https://machine-world-server.vercel.app/workSheet",
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(workData),
-      });
-      const data = await response.json();
-      Swal.fire({
-        title: "Success",
-        text: "Your Work Sheet Will Be Added",
-        icon: "success",
-      });
-      fetchSheetData(); // Fetch the updated worksheet data after adding a new entry
-      form.reset();
-    } catch (error) {
-      console.error("Error adding work sheet data:", error);
-      Swal.fire({
-        title: "Error",
-        text: "Failed to add work sheet data",
-        icon: "error",
-      });
-    }
+      }
+    );
+    const data = await response.json();
+    Swal.fire({
+      title: "Success",
+      text: "Your Work Sheet Will Be Added",
+      icon: "success",
+    });
+    fetchSheetData();  
+    form.reset();
   };
 
   return (
@@ -135,7 +121,11 @@ const WorkSheet = () => {
             <option value="12">December</option>
           </select>
 
-          <select className="p-1 rounded-lg bg-white text-black" name="choice" id="">
+          <select
+            className="p-1 rounded-lg bg-white text-black"
+            name="choice"
+            id=""
+          >
             <option value="">Choose Work</option>
             <option value="sales">Sales</option>
             <option value="support">Support</option>

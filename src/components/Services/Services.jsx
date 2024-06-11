@@ -6,13 +6,11 @@ const Services = () => {
 
   useEffect(() => {
     const fetchServices = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/services");
-        const json = await response.json();
-        setServices(json);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      }
+      const response = await fetch(
+        "https://machine-world-server.vercel.app/services"
+      );
+      const json = await response.json();
+      setServices(json);
     };
 
     fetchServices();

@@ -13,20 +13,14 @@ const HRRoute = ({ children }) => {
 
   useEffect(() => {
     const fetchRole = async () => {
-      try {
-        if (email) {
-          const res = await fetch(
-            `http://localhost:3000/allEmployees/${email}`
-          );
-          const data = await res.json();
-          setRole(data[0]?.role);
-          setLoading(false);
-        } else {
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching role:", error);
-        setError("Failed to fetch role information.");
+      if (email) {
+        const res = await fetch(
+          `https://machine-world-server.vercel.app/allEmployees/${email}`
+        );
+        const data = await res.json();
+        setRole(data[0]?.role);
+        setLoading(false);
+      } else {
         setLoading(false);
       }
     };
@@ -37,12 +31,9 @@ const HRRoute = ({ children }) => {
     const checkRole = async () => {
       if (!loading && role && role !== "HR") {
         console.log("You are not HR. Logging out...");
-        try {
-          await logOut();
-          navigate("/login", { state: { from: location }, replace: true });
-        } catch (error) {
-          console.error("Error logging out:", error);
-        }
+
+        await logOut();
+        navigate("/login", { state: { from: location }, replace: true });
       }
     };
     checkRole();

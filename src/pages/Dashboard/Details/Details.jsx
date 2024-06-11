@@ -18,7 +18,7 @@ const Details = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/payments/${data?.email}`)
+    fetch(`https://machine-world-server.vercel.app/payments/${data?.email}`)
       .then((res) => res.json())
       .then((datas) => {
         setPaymentData(datas);
@@ -59,14 +59,29 @@ const Details = () => {
       <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-10">
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-2">Employee Details</h2>
-          <img src={data.image} alt={data.name} className="w-full h-48 object-cover rounded mb-4" />
-          <p><strong>Name:</strong> {data.name}</p>
-          <p><strong>Email:</strong> {data.email}</p>
-          <p><strong>Bank Account:</strong> {data.bankAccount}</p>
-          <p><strong>Salary:</strong> {data.salary}</p>
-          <p><strong>Role:</strong> {data.role}</p>
-          <p><strong>Designation:</strong> {data.designation}</p>
-        
+          <img
+            src={data.image}
+            alt={data.name}
+            className="w-full h-48 object-cover rounded mb-4"
+          />
+          <p>
+            <strong>Name:</strong> {data.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {data.email}
+          </p>
+          <p>
+            <strong>Bank Account:</strong> {data.bankAccount}
+          </p>
+          <p>
+            <strong>Salary:</strong> {data.salary}
+          </p>
+          <p>
+            <strong>Role:</strong> {data.role}
+          </p>
+          <p>
+            <strong>Designation:</strong> {data.designation}
+          </p>
         </div>
       </div>
 

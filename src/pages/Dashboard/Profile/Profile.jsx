@@ -12,15 +12,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       if (user?.email) {
-        try {
-          const response = await fetch(
-            `http://localhost:3000/allEmployees/${user?.email}`
-          );
-          const data = await response.json();
-          setProfileData(data[0]);
-        } catch (error) {
-          console.error("Error fetching profile data:", error);
-        }
+        const response = await fetch(
+          `https://machine-world-server.vercel.app/allEmployees/${user?.email}`
+        );
+        const data = await response.json();
+        setProfileData(data[0]);
       }
     };
 
@@ -44,34 +40,28 @@ const Profile = () => {
 
   const handleSubmit = async () => {
     if (image) {
-      try {
-        const imageUrl = await imageUpload(image);
-        await fetch(`http://localhost:3000/updateProfile/${user?.email}`, {
+      const imageUrl = await imageUpload(image);
+      await fetch(
+        `https://machine-world-server.vercel.app/updateProfile/${user?.email}`,
+        {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ image: imageUrl }),
-        });
+        }
+      );
 
-        setProfileData((prevProfileData) => ({
-          ...prevProfileData,
-          image: imageUrl,
-        }));
-        setModalOpen(false);
-        Swal.fire({
-          title: "Success!",
-          text: "Profile photo updated successfully",
-          icon: "success",
-        });
-      } catch (error) {
-        console.error("Error updating profile photo:", error);
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to update profile photo",
-          icon: "error",
-        });
-      }
+      setProfileData((prevProfileData) => ({
+        ...prevProfileData,
+        image: imageUrl,
+      }));
+      setModalOpen(false);
+      Swal.fire({
+        title: "Success!",
+        text: "Profile photo updated successfully",
+        icon: "success",
+      });
     }
   };
 

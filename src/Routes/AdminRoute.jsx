@@ -7,26 +7,19 @@ const AdminRoute = ({ children }) => {
   const email = user?.email || "";
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     const fetchRole = async () => {
-      try {
-        if (email) {
-          const res = await fetch(
-            `http://localhost:3000/allEmployees/${email}`
-          );
-          const data = await res.json();
-          setRole(data[0]?.role);
-          setLoading(false);
-        } else {
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching role:", error);
-        setError("Failed to fetch role information.");
+      if (email) {
+        const res = await fetch(
+          `https://machine-world-server.vercel.app/allEmployees/${email}`
+        );
+        const data = await res.json();
+        setRole(data[0]?.role);
+        setLoading(false);
+      } else {
         setLoading(false);
       }
     };
@@ -37,12 +30,9 @@ const AdminRoute = ({ children }) => {
     const checkRole = async () => {
       if (!loading && role && role !== "admin") {
         console.log("You are not an Admin. Logging out...");
-        try {
-          await logOut();
-          navigate("/login", { state: { from: location }, replace: true });
-        } catch (error) {
-          console.error("Error logging out:", error);
-        }
+
+        await logOut();
+        navigate("/login", { state: { from: location }, replace: true });
       }
     };
     checkRole();
@@ -52,9 +42,7 @@ const AdminRoute = ({ children }) => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+ 
 
   return role === "admin" ? children : null;
 };

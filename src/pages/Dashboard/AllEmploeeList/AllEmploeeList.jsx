@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const AllEmployeeList = () => {
@@ -11,69 +11,53 @@ const AllEmployeeList = () => {
   }, []);
 
   const fetchEmployees = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/allEmployee");
-      const data = await response.json();
-      setEmployees(data);
-    } catch (error) {
-      console.error("Error fetching employees:", error);
-    }
+    const response = await fetch(
+      "https://machine-world-server.vercel.app/allEmployee"
+    );
+    const data = await response.json();
+    setEmployees(data);
   };
 
   const handleFire = async (email) => {
-    try {
-      await fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
+    await fetch(
+      `https://machine-world-server.vercel.app/allEmployeeUp/${email}`,
+      {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ role: "fired" }),
-      });
+      }
+    );
 
-      fetchEmployees();
+    fetchEmployees();
 
-      Swal.fire(
-        "Done!",
-        `Employee with email ${email} has been fired.`,
-        "success"
-      );
-    } catch (error) {
-      console.error("Error firing employee:", error);
-
-      Swal.fire(
-        "Error!",
-        "An error occurred while firing the employee.",
-        "error"
-      );
-    }
+    Swal.fire(
+      "Done!",
+      `Employee with email ${email} has been fired.`,
+      "success"
+    );
   };
 
   const handlePromote = async (email) => {
-    try {
-      await fetch(`http://localhost:3000/allEmployeeUp/${email}`, {
+    await fetch(
+      `https://machine-world-server.vercel.app/allEmployeeUp/${email}`,
+      {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ role: "HR" }),
-      });
+      }
+    );
 
-      fetchEmployees();
+    fetchEmployees();
 
-      Swal.fire(
-        "Done!",
-        `Employee with email ${email} has been promoted to HR.`,
-        "success"
-      );
-    } catch (error) {
-      console.error("Error promoting employee:", error);
-
-      Swal.fire(
-        "Error!",
-        "An error occurred while promoting the employee.",
-        "error"
-      );
-    }
+    Swal.fire(
+      "Done!",
+      `Employee with email ${email} has been promoted to HR.`,
+      "success"
+    );
   };
 
   const handleSalaryChange = (email, newSalary) => {
@@ -87,31 +71,24 @@ const AllEmployeeList = () => {
     const newSalary = salaryInputs[email];
     if (newSalary == null) return;
 
-    try {
-      await fetch(`http://localhost:3000/allEmployeeUpS/${email}`, {
+    await fetch(
+      `https://machine-world-server.vercel.app/allEmployeeUpS/${email}`,
+      {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ salary: newSalary }),
-      });
+      }
+    );
 
-      fetchEmployees();
+    fetchEmployees();
 
-      Swal.fire(
-        "Done!",
-        `Employee with email ${email}'s salary has been updated.`,
-        "success"
-      );
-    } catch (error) {
-      console.error("Error updating salary:", error);
-
-      Swal.fire(
-        "Error!",
-        "An error occurred while updating the salary.",
-        "error"
-      );
-    }
+    Swal.fire(
+      "Done!",
+      `Employee with email ${email}'s salary has been updated.`,
+      "success"
+    );
   };
 
   const confirmAction = (employee, action) => {
