@@ -1,6 +1,6 @@
 # Machine World
 
-Machine World is an employee management system designed to monitor the workload of employees, keep records of salaries, contracts, and more. This web application allows employees to post updates on their workflow, while HR Executives can monitor employee workflows and handle payments.
+Machine World is an employee management system designed to monitor workloads, keep records of salaries and contracts, and more. Employees can post workflow updates, while HR Executives manage workflows and handle payments.
 
 ## Live Site
 
@@ -13,40 +13,32 @@ Machine World is an employee management system designed to monitor the workload 
 
 ## Features
 
-1. **Responsive Design**: The website is fully responsive and optimized for mobile, tablet, and desktop views.
-2. **User Authentication**: Email and password-based authentication with role-based access control (Employee, HR, Admin).
-3. **Social Login**: Support for Google authentication for employee roles.
-4. **Private Routes**: Access to private routes persists even after page reloads.
-5. **CRUD Operations**: Employees can post their work updates, and HR can manage employee data and payments.
-6. **Payment History**: Employees can view their payment history, and HR can make salary payments.
-7. **Admin Control**: Admin can view all employees, promote employees to HR, and adjust salaries.
-8. **Real-time Data**: Work records and payment histories are updated in real-time without page reloads.
-9. **Notifications**: Sweet alerts for all CRUD operations and authentication actions.
-10. **Environment Variables**: Firebase and MongoDB credentials are securely managed using environment variables.
+- **Responsive Design**: Optimized for mobile, tablet, and desktop views.
+- **User Authentication**: Email/password authentication with role-based access control.
+- **Social Login**: Google authentication for employees.
+- **Private Routes**: Access persists after page reloads.
+- **CRUD Operations**: Employees post updates; HR manages data and payments.
+- **Payment History**: Employees view payment history; HR handles salary payments.
+- **Admin Control**: Admin can promote employees to HR and adjust salaries.
+- **Real-time Data**: Updates without page reloads.
+- **Notifications**: Sweet alerts for CRUD operations and authentication.
+- **Environment Variables**: Secure management of Firebase and MongoDB credentials.
 
-## Pages
+## Best Features
 
-### Home Page
-- **Banner/Slider**: Displays the success of the company.
-- **Services**: Lists the services provided by the company.
-- **Testimonials**: A slider showcasing appreciation from different clients.
-- **Additional Sections**: Relevant sections to enhance user experience.
-- **Navbar and Footer**: Available across all pages.
+1. **User Authentication and Role Management**: Secure email/password authentication and Google login, with role-based access control for employees, HR, and admin.
+2. **Real-time Data Updates**: Seamless real-time updates of work records and payment histories without requiring page reloads.
+3. **Admin Control**: Comprehensive admin features to manage employees, promote to HR, and adjust salaries.
 
-### Authentication
-- **Register**: Email/password registration with role selection (Employee, HR).
-- **Login**: Email/password login with error handling.
-- **Social Login**: Google authentication.
+## Running the Project
 
-### Dashboard
-- **Employee Dashboard**: 
-  - **Work Sheet**: Form to submit work updates and a table displaying submitted work.
-  - **Payment History**: Table displaying the history of salary payments.
-- **HR Dashboard**: 
-  - **Employee List**: Table displaying all employees with options to verify, pay, and view details.
-  - **Progress**: Table displaying work records of employees with filtering options.
-- **Admin Dashboard**: 
-  - **All Employee List**: Table displaying all verified employees with options to promote to HR, fire, and adjust salaries.
+To run the project locally:
+
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Install dependencies: `npm install`
+4. Add your Firebase and MongoDB credentials to the `.env` file.
+5. Start the development server: `npm start`
 
 ## Packages Used
 
